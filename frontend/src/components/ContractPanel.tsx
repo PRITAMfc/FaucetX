@@ -40,7 +40,7 @@ export function ContractPanel() {
   if (!hasContract) {
     return (
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-        <div className="h-full p-5 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken flex flex-col items-center justify-center text-center">
+        <div className="h-full p-5 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken flex flex-col items-center justify-center text-center">
           <div className="p-2 rounded-lg bg-amber-500/20 mb-3">
             <FileText className="w-5 h-5 text-amber-500" />
           </div>
@@ -54,7 +54,7 @@ export function ContractPanel() {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-      <div className="h-full p-5 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken flex flex-col">
+      <div className="h-full p-5 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-kraken-purple-subtle">
@@ -66,7 +66,7 @@ export function ContractPanel() {
         </div>
 
         <div className="space-y-3 flex-1">
-          <div className="p-2.5 rounded-lg bg-[#f8f9fa] border border-kraken-border-gray">
+          <div className="p-2.5 rounded-lg bg-muted border border-kraken-border-gray">
             <p className="text-[10px] text-kraken-gray mb-1">Contract ID</p>
             <code className="text-[11px] font-mono text-primary break-all">
               {FAUCET_CONTRACT_ID.slice(0, 16)}...{FAUCET_CONTRACT_ID.slice(-8)}
@@ -77,7 +77,7 @@ export function ContractPanel() {
             <div className="space-y-3">
               <div className="space-y-1.5">
                 <Label className="text-xs text-kraken-gray">State</Label>
-                <div className="p-2.5 rounded-lg bg-[#f8f9fa] border border-kraken-border-gray text-xs">
+                <div className="p-2.5 rounded-lg bg-muted border border-kraken-border-gray text-xs">
                   <span className="text-kraken-gray">Value: </span>
                   <span className="text-kraken-black font-mono">{contractValue || '(empty)'}</span>
                 </div>
@@ -107,7 +107,7 @@ export function ContractPanel() {
                 <Refresh className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
               </Button>
             </div>
-            <div className="p-2.5 rounded-lg bg-[#f8f9fa] border border-kraken-border-gray max-h-20 overflow-y-auto">
+            <div className="p-2.5 rounded-lg bg-muted border border-kraken-border-gray max-h-20 overflow-y-auto">
               {events.length === 0 ? (
                 <p className="text-[10px] text-kraken-gray-light">No events yet</p>
               ) : (

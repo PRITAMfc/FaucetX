@@ -42,7 +42,7 @@ export function WalletConnect() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full"
       >
-        <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken">
+        <div className="flex items-center justify-between p-3 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken">
           <div className="flex items-center gap-3">
             <KrakenLogo className="w-5 h-5" />
             <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ export function WalletConnect() {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-sm mx-auto">
-      <div className="p-6 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken text-center space-y-4">
+      <div className="p-6 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken text-center space-y-4">
         <div className="mx-auto p-3 rounded-2xl bg-kraken-purple-subtle w-fit">
           <KrakenLogo className="w-10 h-10" />
         </div>

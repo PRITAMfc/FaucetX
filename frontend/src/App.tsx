@@ -8,11 +8,12 @@ import { useWallet } from '@/hooks/useWallet'
 import { Toaster } from 'react-hot-toast'
 import { motion } from 'framer-motion'
 import { KrakenLogo } from '@/components/ui/kraken-logo'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { Shield, Lightning, Globe, ArrowRight, Wallet } from 'reicon-react'
 
 function LandingPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <motion.header
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -25,6 +26,7 @@ function LandingPage() {
           </span>
         </div>
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <SignInButton mode="modal">
             <button className="px-4 py-2 text-sm font-medium text-kraken-black hover:text-primary transition-colors rounded-xl">
               Sign In
@@ -71,7 +73,7 @@ function LandingPage() {
         className="max-w-5xl mx-auto px-6 pb-20"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div className="p-6 rounded-2xl border border-kraken-border-gray bg-white shadow-kraken hover:shadow-lg transition-shadow">
+          <div className="p-6 rounded-2xl border border-kraken-border-gray bg-card shadow-kraken hover:shadow-lg transition-shadow">
             <div className="p-2 rounded-xl bg-kraken-purple-subtle w-fit mb-4">
               <Wallet className="w-5 h-5 text-primary" />
             </div>
@@ -80,7 +82,7 @@ function LandingPage() {
               Freighter, Albedo, LOBSTR, xBull, Ledger, Trezor, WalletConnect and more.
             </p>
           </div>
-          <div className="p-6 rounded-2xl border border-kraken-border-gray bg-white shadow-kraken hover:shadow-lg transition-shadow">
+          <div className="p-6 rounded-2xl border border-kraken-border-gray bg-card shadow-kraken hover:shadow-lg transition-shadow">
             <div className="p-2 rounded-xl bg-kraken-purple-subtle w-fit mb-4">
               <Lightning className="w-5 h-5 text-primary" />
             </div>
@@ -89,7 +91,7 @@ function LandingPage() {
               Get free testnet XLM via Stellar Friendbot with one click. No waiting.
             </p>
           </div>
-          <div className="p-6 rounded-2xl border border-kraken-border-gray bg-white shadow-kraken hover:shadow-lg transition-shadow">
+          <div className="p-6 rounded-2xl border border-kraken-border-gray bg-card shadow-kraken hover:shadow-lg transition-shadow">
             <div className="p-2 rounded-xl bg-kraken-purple-subtle w-fit mb-4">
               <Shield className="w-5 h-5 text-primary" />
             </div>
@@ -118,15 +120,15 @@ function Dashboard() {
   const { isConnected } = useWallet()
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa]">
+    <div className="min-h-screen bg-background">
       <Toaster
         position="top-right"
         toastOptions={{
-          className: 'bg-white text-kraken-black border border-kraken-border-gray shadow-kraken',
+          className: 'bg-card text-kraken-black border border-kraken-border-gray shadow-kraken dark:text-kraken-black',
         }}
       />
 
-      <header className="flex items-center justify-between px-6 py-4 bg-white border-b border-kraken-border-gray">
+      <header className="flex items-center justify-between px-6 py-4 bg-card border-b border-kraken-border-gray">
         <div className="flex items-center gap-2.5">
           <KrakenLogo className="w-8 h-8" />
           <span className="font-brand text-xl font-bold text-kraken-black tracking-tight">
@@ -141,6 +143,7 @@ function Dashboard() {
             <span className="w-1.5 h-1.5 rounded-full bg-kraken-green" />
             Connected
           </span>
+          <ThemeToggle />
           <UserButton
             appearance={{
               elements: {

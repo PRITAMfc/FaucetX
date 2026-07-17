@@ -59,7 +59,7 @@ export function FeedbackForm() {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-      <div className="p-5 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken">
+      <div className="p-5 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken">
         <div className="flex items-center gap-2 mb-4">
           <div className="p-1.5 rounded-lg bg-kraken-purple-subtle">
             <MessageSquare className="w-4 h-4 text-primary" />
@@ -74,7 +74,7 @@ export function FeedbackForm() {
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
             rows={2}
-            className="bg-[#f8f9fa] border-kraken-border-gray focus:border-primary/50 resize-none text-sm"
+            className="bg-muted border-kraken-border-gray focus:border-primary/50 resize-none text-sm"
           />
           <Button
             type="submit"

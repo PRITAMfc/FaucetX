@@ -65,7 +65,7 @@ export function SendTransaction() {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-      <div className="h-full p-5 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken flex flex-col">
+      <div className="h-full p-5 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-kraken-purple-subtle">
