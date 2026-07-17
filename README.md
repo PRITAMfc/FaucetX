@@ -269,6 +269,8 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 ### Wallet Selection Modal
 
 <img width="496" height="313" alt="image" src="https://github.com/user-attachments/assets/2a6efcc4-35a8-4eea-bdf7-4fec90f43d69" />
+
+<br/>
 <img width="1890" height="870" alt="image" src="https://github.com/user-attachments/assets/cffc6165-b876-4064-a830-e58a10cc20c9" />
 
 
