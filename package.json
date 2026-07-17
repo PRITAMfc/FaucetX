@@ -1,0 +1,20 @@
+{
+  "name": "faucetx",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently \"bun run dev:backend\" \"bun run dev:frontend\"",
+    "dev:frontend": "cd frontend && bun run dev",
+    "dev:backend": "cd backend && bun run dev",
+    "build": "cd frontend && bun run build",
+    "start": "cd frontend && bun run preview"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

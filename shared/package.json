@@ -1,0 +1,11 @@
+{
+  "name": "faucetx-shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@stellar/stellar-sdk": "^11.3.0",
+    "zod": "^3.22.4"
+  }
+}
