@@ -58,13 +58,18 @@ async function main() {
   const deployerPublicKey = deployerKeypair.publicKey()
   console.log(`  Public: ${deployerPublicKey}`)
 
-  // Step 2: Fund the deployer account
+  // Step 2: Fund the deployer account (skip if already funded)
   console.log('\nStep 2: Funding deployer with testnet XLM...')
-  const friendbotResponse = await fetch(`https://friendbot.stellar.org?addr=${deployerPublicKey}`)
-  if (!friendbotResponse.ok) {
-    throw new Error('Friendbot funding failed')
+  try {
+    const friendbotResponse = await fetch(`https://friendbot.stellar.org?addr=${deployerPublicKey}`)
+    if (friendbotResponse.ok) {
+      console.log('  Account funded!')
+    } else {
+      console.log('  Account may already be funded, continuing...')
+    }
+  } catch {
+    console.log('  Friendbot unreachable, continuing with existing balance...')
   }
-  console.log('  Account funded!')
 
   await new Promise(r => setTimeout(r, 3000))
 
@@ -89,7 +94,7 @@ async function main() {
     StellarSdk.Operation.createCustomContract({
       wasmHash: wasmHashBuffer,
       address: StellarSdk.Address.fromString(deployerPublicKey),
-      salt: StellarSdk.hash(wasmBytecode),
+      salt: StellarSdk.hash(Date.now().toString()),
     })
   )
 
@@ -144,7 +149,7 @@ async function main() {
   console.log(`\nContract Address: ${contractAddress}`)
   console.log(`Deployer Secret: ${deployerSecret}`)
   console.log(`Deployer Public: ${deployerPublicKey}`)
-  console.log(`Explorer: https://stellar.expert/testnet/contract/${contractAddress}`)
+  console.log(`Explorer: https://stellar.expert/explorer/testnet/contract/${contractAddress}`)
 
   const envContent = `# FaucetX Smart Contract (Soroban)
 VITE_FAUCET_CONTRACT_ID=${contractAddress}

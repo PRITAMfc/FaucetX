@@ -1,19 +1,20 @@
 import {
   StellarWalletsKit,
-  WalletNetwork,
-  allowAllModules,
+  Networks,
 } from '@creit.tech/stellar-wallets-kit'
+import { defaultModules } from '@creit.tech/stellar-wallets-kit/modules/utils'
 
-let kit: StellarWalletsKit | null = null
+let initialized = false
 
-export function getWalletKit(): StellarWalletsKit {
-  if (!kit) {
-    kit = new StellarWalletsKit({
-      network: WalletNetwork.TESTNET,
-      modules: allowAllModules(),
-    })
-  }
-  return kit
+export function initWalletKit() {
+  if (initialized) return
+
+  StellarWalletsKit.init({
+    network: Networks.TESTNET,
+    modules: defaultModules(),
+  })
+
+  initialized = true
 }
 
-export { WalletNetwork }
+export { StellarWalletsKit, Networks }

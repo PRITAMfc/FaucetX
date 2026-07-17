@@ -1,6 +1,8 @@
 import { useCallback, useEffect } from 'react'
 import { useWalletStore, TxStatus } from '@/stores/walletStore'
-import { getWalletKit } from '@/config/walletKit'
+
+export { TxStatus }
+import { initWalletKit, StellarWalletsKit } from '@/config/walletKit'
 import { server, TESTNET_NETWORK_PASSPHRASE } from '@/config/stellar'
 import { handleWalletError, WalletErrorType } from '@/utils/errors'
 import * as StellarSdk from '@stellar/stellar-sdk'
@@ -9,11 +11,11 @@ export function useWallet() {
   const {
     isConnected, address, walletName, balance,
     isConnecting, isFunding, isSending, txStatus, txError,
-    lastTransaction, contractData, error,
+    lastTransaction, error,
     setAddress, setWalletName, setBalance, setConnected,
     setConnecting, setFunding, setSending,
     setTxStatus, setTxError, setLastTransaction,
-    setContractData, setError, disconnect,
+    setError, disconnect,
   } = useWalletStore()
 
   const connectWallet = useCallback(async () => {
@@ -21,22 +23,20 @@ export function useWallet() {
     setError(null)
 
     try {
-      const kit = getWalletKit()
+      initWalletKit()
 
-      await kit.openModal({
-        modalTitle: 'Connect to FaucetX',
-        onWalletSelected: async (option) => {
-          kit.setWallet(option.id)
-          const { address: walletAddress } = await kit.getAddress()
+      const { address: walletAddress } = await StellarWalletsKit.authModal()
 
-          setAddress(walletAddress)
-          setWalletName(option.name || option.id)
-          setConnected(true)
+      setAddress(walletAddress)
 
-          const walletBalance = await fetchBalance(walletAddress)
-          setBalance(walletBalance)
-        },
-      })
+      const { address: storedAddress } = await StellarWalletsKit.getAddress()
+      setAddress(storedAddress || walletAddress)
+
+      setConnected(true)
+
+      const walletBalance = await fetchBalance(storedAddress || walletAddress)
+      setBalance(walletBalance)
+      setWalletName('Wallet')
     } catch (err) {
       const walletError = handleWalletError(err)
       setError(`${walletError.message}: ${walletError.details}`)
@@ -102,11 +102,10 @@ export function useWallet() {
     setError(null)
 
     try {
-      const kit = getWalletKit()
       const sourceAccount = await server.loadAccount(address)
 
       const transaction = new StellarSdk.TransactionBuilder(sourceAccount, {
-        fee: await server.fetchBaseFee(),
+        fee: String(await server.fetchBaseFee()),
         networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
       })
         .addOperation(
@@ -125,7 +124,7 @@ export function useWallet() {
 
       setTxStatus(TxStatus.SUBMITTED)
 
-      const { signedTxXdr } = await kit.signTransaction(builtTx.toXDR(), {
+      const { signedTxXdr } = await StellarWalletsKit.signTransaction(builtTx.toXDR(), {
         networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
         address,
       })
@@ -171,13 +170,11 @@ export function useWallet() {
     setTxStatus(TxStatus.PENDING)
 
     try {
-      const kit = getWalletKit()
-
       const contract = new StellarSdk.Contract(contractId)
       const sourceAccount = await server.loadAccount(signerAddress)
 
       const transaction = new StellarSdk.TransactionBuilder(sourceAccount, {
-        fee: await server.fetchBaseFee(),
+        fee: String(await server.fetchBaseFee()),
         networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
       })
         .addOperation(contract.call(method, ...args))
@@ -186,7 +183,7 @@ export function useWallet() {
 
       setTxStatus(TxStatus.SUBMITTED)
 
-      const { signedTxXdr } = await kit.signTransaction(transaction.toXDR(), {
+      const { signedTxXdr } = await StellarWalletsKit.signTransaction(transaction.toXDR(), {
         networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
         address: signerAddress,
       })
@@ -219,8 +216,8 @@ export function useWallet() {
 
   const disconnectWallet = useCallback(async () => {
     try {
-      const kit = getWalletKit()
-      await kit.disconnect()
+      initWalletKit()
+      await StellarWalletsKit.disconnect()
     } catch {
       // Ignore disconnect errors
     }
@@ -230,7 +227,6 @@ export function useWallet() {
   useEffect(() => {
     const checkAutoConnect = async () => {
       try {
-        const kit = getWalletKit()
         const storedAddress = localStorage.getItem('faucetx_address')
         const storedName = localStorage.getItem('faucetx_walletName')
 
@@ -262,7 +258,7 @@ export function useWallet() {
   return {
     isConnected, address, walletName, balance,
     isConnecting, isFunding, isSending, txStatus, txError,
-    lastTransaction, contractData, error,
+    lastTransaction, error,
     connectWallet, refreshBalance, fundWallet,
     sendTransaction, invokeContract, disconnectWallet,
     WalletErrorType,
