@@ -100,6 +100,16 @@ FaucetX is a **full-stack Stellar testnet faucet dApp** featuring multi-wallet c
 
 <br/>
 
+## Mobile Responsiveness
+
+<img width="350" height="900" alt="7ac855b7-ecad-4f91-bb25-6ab63e6c999b" src="https://github.com/user-attachments/assets/16636bb6-18bf-4034-b245-4b68f538b082" />
+<img width="350" height="900" alt="54d00183-6718-43c1-a301-aea00443e0b5" src="https://github.com/user-attachments/assets/041fc4f0-c945-4fac-ad5f-b72ab7995bac" />
+
+
+
+
+
+
 ## Features
 
 ### Multi-Wallet Integration
