@@ -51,21 +51,21 @@ export function FeedbackForm() {
 
   const sentimentColor = (s: string) => {
     switch (s) {
-      case 'positive': return 'bg-emerald-500/20 text-emerald-400'
-      case 'negative': return 'bg-red-500/20 text-red-400'
-      default: return 'bg-slate-500/20 text-slate-400'
+      case 'positive': return 'bg-[rgba(20,158,97,0.16)] text-kraken-green-dark'
+      case 'negative': return 'bg-red-50 border border-red-200 text-red-600'
+      default: return 'bg-[rgba(104,107,130,0.12)] text-[#484b5e]'
     }
   }
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-      <div className="p-5 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10">
+      <div className="p-5 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken">
         <div className="flex items-center gap-2 mb-4">
-          <div className="p-1.5 rounded-lg bg-purple-500/20">
-            <MessageSquare className="w-4 h-4 text-purple-400" />
+          <div className="p-1.5 rounded-lg bg-kraken-purple-subtle">
+            <MessageSquare className="w-4 h-4 text-primary" />
           </div>
-          <span className="text-sm font-semibold text-white">Feedback</span>
-          <span className="text-[10px] text-slate-500 ml-auto">Powered by Mistral AI</span>
+          <span className="text-sm font-semibold text-kraken-black">Feedback</span>
+          <span className="text-[10px] text-kraken-gray-light ml-auto">Powered by Mistral AI</span>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
@@ -74,7 +74,7 @@ export function FeedbackForm() {
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
             rows={2}
-            className="bg-white/5 border-white/10 focus:border-purple-500/50 resize-none text-sm"
+            className="bg-[#f8f9fa] border-kraken-border-gray focus:border-primary/50 resize-none text-sm"
           />
           <Button
             type="submit"
@@ -107,12 +107,12 @@ export function FeedbackForm() {
             >
               <div className="flex gap-1.5">
                 <Badge className={`${sentimentColor(result.sentiment)} text-[10px]`}>{result.sentiment}</Badge>
-                <Badge variant="outline" className="text-[10px]">{result.category}</Badge>
+                <Badge variant="neutral" className="text-[10px]">{result.category}</Badge>
               </div>
-              <div className="p-2.5 rounded-lg bg-purple-500/10 border border-purple-500/20">
+              <div className="p-2.5 rounded-lg bg-kraken-purple-subtle border border-primary/20">
                 <div className="flex items-start gap-2">
-                  <Sparkles className="w-3 h-3 text-purple-400 mt-0.5 shrink-0" />
-                  <p className="text-xs text-purple-200">{result.aiResponse}</p>
+                  <Sparkles className="w-3 h-3 text-primary mt-0.5 shrink-0" />
+                  <p className="text-xs text-kraken-black">{result.aiResponse}</p>
                 </div>
               </div>
             </motion.div>

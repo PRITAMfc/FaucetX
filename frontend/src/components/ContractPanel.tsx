@@ -40,12 +40,12 @@ export function ContractPanel() {
   if (!hasContract) {
     return (
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-        <div className="h-full p-5 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 flex flex-col items-center justify-center text-center">
+        <div className="h-full p-5 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken flex flex-col items-center justify-center text-center">
           <div className="p-2 rounded-lg bg-amber-500/20 mb-3">
-            <FileText className="w-5 h-5 text-amber-400" />
+            <FileText className="w-5 h-5 text-amber-500" />
           </div>
-          <p className="text-sm font-semibold text-white mb-1">Smart Contract</p>
-          <p className="text-xs text-slate-500 mb-3">Deploy a Soroban contract to enable on-chain interactions</p>
+          <p className="text-sm font-semibold text-kraken-black mb-1">Smart Contract</p>
+          <p className="text-xs text-kraken-gray mb-3">Deploy a Soroban contract to enable on-chain interactions</p>
           <Badge variant="warning" className="text-[10px]">Not Configured</Badge>
         </div>
       </motion.div>
@@ -54,21 +54,21 @@ export function ContractPanel() {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-      <div className="h-full p-5 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 flex flex-col">
+      <div className="h-full p-5 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-cyan-500/20">
-              <FileText className="w-4 h-4 text-cyan-400" />
+            <div className="p-1.5 rounded-lg bg-kraken-purple-subtle">
+              <FileText className="w-4 h-4 text-primary" />
             </div>
-            <span className="text-sm font-semibold text-white">Contract</span>
+            <span className="text-sm font-semibold text-kraken-black">Contract</span>
           </div>
           <Badge variant="success" className="text-[10px]">Deployed</Badge>
         </div>
 
         <div className="space-y-3 flex-1">
-          <div className="p-2.5 rounded-lg bg-white/5">
-            <p className="text-[10px] text-slate-500 mb-1">Contract ID</p>
-            <code className="text-[11px] font-mono text-cyan-400 break-all">
+          <div className="p-2.5 rounded-lg bg-[#f8f9fa] border border-kraken-border-gray">
+            <p className="text-[10px] text-kraken-gray mb-1">Contract ID</p>
+            <code className="text-[11px] font-mono text-primary break-all">
               {FAUCET_CONTRACT_ID.slice(0, 16)}...{FAUCET_CONTRACT_ID.slice(-8)}
             </code>
           </div>
@@ -76,21 +76,21 @@ export function ContractPanel() {
           {address && (
             <div className="space-y-3">
               <div className="space-y-1.5">
-                <Label className="text-xs">State</Label>
-                <div className="p-2.5 rounded-lg bg-white/5 text-xs">
-                  <span className="text-slate-500">Value: </span>
-                  <span className="text-cyan-400 font-mono">{contractValue || '(empty)'}</span>
+                <Label className="text-xs text-kraken-gray">State</Label>
+                <div className="p-2.5 rounded-lg bg-[#f8f9fa] border border-kraken-border-gray text-xs">
+                  <span className="text-kraken-gray">Value: </span>
+                  <span className="text-kraken-black font-mono">{contractValue || '(empty)'}</span>
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs">Set Value</Label>
+                <Label className="text-xs text-kraken-gray">Set Value</Label>
                 <div className="flex gap-1.5">
                   <Input
                     placeholder="Enter value"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    className="h-8 text-xs"
+                    className="h-8 text-xs border-kraken-border-gray"
                   />
                   <Button variant="stellar" size="icon" className="h-8 w-8 shrink-0" disabled={!inputValue}>
                     <Play className="w-3.5 h-3.5" />
@@ -102,17 +102,17 @@ export function ContractPanel() {
 
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <Label className="text-xs">Events</Label>
+              <Label className="text-xs text-kraken-gray">Events</Label>
               <Button variant="ghost" size="sm" onClick={fetchEvents} disabled={loading} className="h-6 px-1.5">
                 <Refresh className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
               </Button>
             </div>
-            <div className="p-2.5 rounded-lg bg-white/5 max-h-20 overflow-y-auto">
+            <div className="p-2.5 rounded-lg bg-[#f8f9fa] border border-kraken-border-gray max-h-20 overflow-y-auto">
               {events.length === 0 ? (
-                <p className="text-[10px] text-slate-500">No events yet</p>
+                <p className="text-[10px] text-kraken-gray-light">No events yet</p>
               ) : (
                 events.slice(0, 3).map((event: unknown, i: number) => (
-                  <div key={i} className="text-[10px] text-slate-400 py-0.5 border-b border-white/5 last:border-0 truncate">
+                  <div key={i} className="text-[10px] text-kraken-gray py-0.5 border-b border-kraken-border-gray last:border-0 truncate">
                     {JSON.stringify(event).slice(0, 60)}
                   </div>
                 ))
@@ -125,7 +125,7 @@ export function ContractPanel() {
           href={`https://stellar.expert/explorer/testnet/contract/${FAUCET_CONTRACT_ID}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3 flex items-center justify-center gap-1 text-[11px] text-cyan-400/70 hover:text-cyan-400 transition-colors"
+          className="mt-3 flex items-center justify-center gap-1 text-[11px] text-primary/70 hover:text-primary transition-colors"
         >
           View on Stellar Expert
           <ArrowUpRight className="w-3 h-3" />

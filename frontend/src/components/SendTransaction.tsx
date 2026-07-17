@@ -55,30 +55,30 @@ export function SendTransaction() {
 
   const statusConfig: Record<string, { icon: React.ReactNode; label: string; color: string } | null> = {
     [TxStatus.IDLE]: null,
-    [TxStatus.PENDING]: { icon: <Clock className="w-3.5 h-3.5" />, label: 'Awaiting approval...', color: 'text-amber-400' },
-    [TxStatus.SUBMITTED]: { icon: <Spinner size="sm" />, label: 'Confirming...', color: 'text-cyan-400' },
-    [TxStatus.SUCCESS]: { icon: <CheckCircle className="w-3.5 h-3.5" />, label: 'Confirmed!', color: 'text-emerald-400' },
-    [TxStatus.FAILED]: { icon: <XCircle className="w-3.5 h-3.5" />, label: 'Failed', color: 'text-red-400' },
+    [TxStatus.PENDING]: { icon: <Clock className="w-3.5 h-3.5" />, label: 'Awaiting approval...', color: 'text-amber-500' },
+    [TxStatus.SUBMITTED]: { icon: <Spinner size="sm" />, label: 'Confirming...', color: 'text-primary' },
+    [TxStatus.SUCCESS]: { icon: <CheckCircle className="w-3.5 h-3.5" />, label: 'Confirmed!', color: 'text-kraken-green' },
+    [TxStatus.FAILED]: { icon: <XCircle className="w-3.5 h-3.5" />, label: 'Failed', color: 'text-red-500' },
   }
 
   const currentStatus = statusConfig[txStatus]
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-      <div className="h-full p-5 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 flex flex-col">
+      <div className="h-full p-5 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-cyan-500/20">
-              <Send className="w-4 h-4 text-cyan-400" />
+            <div className="p-1.5 rounded-lg bg-kraken-purple-subtle">
+              <Send className="w-4 h-4 text-primary" />
             </div>
-            <span className="text-sm font-semibold text-white">Send XLM</span>
+            <span className="text-sm font-semibold text-kraken-black">Send XLM</span>
           </div>
           {lastTransaction && txStatus === TxStatus.SUCCESS && (
             <a
               href={`https://stellar.expert/explorer/testnet/tx/${lastTransaction.hash}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan-400 hover:text-cyan-300"
+              className="text-primary hover:text-primary/80"
             >
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
@@ -87,18 +87,18 @@ export function SendTransaction() {
 
         <form onSubmit={handleSubmit} className="flex-1 flex flex-col gap-3">
           <div className="space-y-1.5">
-            <Label className="text-xs">Destination</Label>
+            <Label className="text-xs text-kraken-gray">Destination</Label>
             <Input
               placeholder="G..."
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
-              className="font-mono text-xs h-9"
+              className="font-mono text-xs h-9 border-kraken-border-gray"
               disabled={isSending}
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs">Amount (XLM)</Label>
+            <Label className="text-xs text-kraken-gray">Amount (XLM)</Label>
             <Input
               type="number"
               step="0.01"
@@ -106,28 +106,28 @@ export function SendTransaction() {
               placeholder="0.00"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="h-9"
+              className="h-9 border-kraken-border-gray"
               disabled={isSending}
             />
-            <p className="text-[10px] text-slate-500">
+            <p className="text-[10px] text-kraken-gray-light">
               Available: {balance ? `${parseFloat(balance).toFixed(2)} XLM` : '0.00 XLM'}
             </p>
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs">Memo</Label>
+            <Label className="text-xs text-kraken-gray">Memo</Label>
             <Input
               placeholder="Optional"
               value={memo}
               onChange={(e) => setMemo(e.target.value)}
               maxLength={28}
-              className="h-9"
+              className="h-9 border-kraken-border-gray"
               disabled={isSending}
             />
           </div>
 
           {insufficientFunds && amountNum > 0 && (
-            <div className="flex items-center gap-1.5 text-[11px] text-amber-400">
+            <div className="flex items-center gap-1.5 text-[11px] text-amber-600">
               <AlertCircle className="w-3 h-3" />
               Insufficient balance
             </div>
@@ -165,7 +165,7 @@ export function SendTransaction() {
         </AnimatePresence>
 
         {txError && (
-          <p className="mt-1.5 text-[11px] text-red-400 truncate">{txError}</p>
+          <p className="mt-1.5 text-[11px] text-red-500 truncate">{txError}</p>
         )}
       </div>
     </motion.div>
