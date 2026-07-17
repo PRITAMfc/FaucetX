@@ -10,10 +10,13 @@
     "test": "bun test"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.61.3",
+    "@clerk/ui": "^1.25.5",
     "@creit.tech/stellar-wallets-kit": "^2.1.0",
     "@stellar/stellar-sdk": "^11.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "fastestsmallesttextencoderdecoder": "^1.0.22",
     "framer-motion": "^11.15.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,9 +24,8 @@
     "reicon-react": "^1.0.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "fastestsmallesttextencoderdecoder": "^1.0.22",
-    "zustand": "^4.5.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",

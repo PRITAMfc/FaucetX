@@ -29,13 +29,13 @@ export function BalanceDisplay() {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-      <div className="h-full p-5 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 flex flex-col">
+      <div className="h-full p-5 rounded-2xl bg-white border border-kraken-border-gray shadow-kraken flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-cyan-500/20">
-              <TrendUp className="w-4 h-4 text-cyan-400" />
+            <div className="p-1.5 rounded-lg bg-kraken-purple-subtle">
+              <TrendUp className="w-4 h-4 text-primary" />
             </div>
-            <span className="text-sm font-semibold text-white">Balance</span>
+            <span className="text-sm font-semibold text-kraken-black">Balance</span>
           </div>
           <Badge variant={balanceNum > 0 ? 'success' : 'warning'} className="text-[10px]">
             {balanceNum > 0 ? 'Funded' : 'Empty'}
@@ -45,9 +45,9 @@ export function BalanceDisplay() {
         <div className="flex-1 flex items-center justify-center py-4">
           <motion.div key={balance} initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
             {balance ? (
-              <span className="text-4xl font-bold text-cyan-400">
+              <span className="text-4xl font-bold text-kraken-black">
                 {parseFloat(balance).toFixed(2)}
-                <span className="text-lg text-slate-500 ml-1">XLM</span>
+                <span className="text-lg text-kraken-gray-light ml-1">XLM</span>
               </span>
             ) : (
               <Spinner size="lg" />
