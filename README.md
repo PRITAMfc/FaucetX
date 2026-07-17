@@ -1,4 +1,6 @@
 # FaucetX
+<img width="1732" height="860" alt="image" src="https://github.com/user-attachments/assets/0983d352-b32d-4cd2-b6eb-56ad9e265622" />
+<img width="1817" height="818" alt="image" src="https://github.com/user-attachments/assets/1afe785f-1d81-4ced-a0f5-6e9ac9d0356c" />
 
 <div align="center">
 
@@ -146,32 +148,38 @@ Contract events are polled every 10 seconds and displayed in the UI.
 ## Screenshots
 
 ### Wallet Options Available
-![Wallet Options](https://via.placeholder.com/800x400/0C1117/08B5E5?text=Multi-Wallet+Connection+Modal)
+<img width="1560" height="832" alt="image" src="https://github.com/user-attachments/assets/42612903-0fde-45ec-8bab-6953e900c205" />
+
 
 *StellarWalletsKit modal showing all available wallet options*
 
 ### Wallet Connected State
-![Connected](https://via.placeholder.com/800x400/0C1117/10B981?text=Wallet+Connected)
+<img width="1573" height="751" alt="image" src="https://github.com/user-attachments/assets/8bd302f1-85de-4bb0-8f33-db194bad6627" />
+
 
 *Freighter wallet connected with address, network badge, and balance*
 
 ### Balance Displayed
-![Balance](https://via.placeholder.com/800x400/0C1117/08B5E5?text=Balance+Display)
+<img width="490" height="532" alt="image" src="https://github.com/user-attachments/assets/477e0fc8-f017-46c0-86f5-895631544314" />
+
 
 *XLM balance with Fund Wallet and Refresh buttons*
 
 ### Transaction Status
-![Tx Status](https://via.placeholder.com/800x400/0C1117/F59E0B?text=Transaction+Status+Tracking)
+<img width="1031" height="767" alt="image" src="https://github.com/user-attachments/assets/b1960cdf-9065-4266-88ca-ae1be0e2386c" />
+
+<img width="1736" height="717" alt="image" src="https://github.com/user-attachments/assets/2f194dec-70c5-4243-ab0a-dac345ca32ec" />
 
 *Real-time transaction status: Pending → Submitted → Success*
 
 ### Deployed Contract Address
-![Contract](https://via.placeholder.com/800x400/0C1117/8B5CF6?text=Soroban+Contract+Panel)
-
+<img width="1830" height="767" alt="image" src="https://github.com/user-attachments/assets/a5a46596-6cfb-49a6-80d0-9ec0ab1a6524" />
+https://stellar.expert/explorer/testnet/contract/CBE3LXOSOKBPOWGZ6HVJXAEYILPFXHCEFWMYQA7CJIR63JRCMIXEU7DC
 *Soroban smart contract interaction panel with events*
 
 ### Transaction Hash (Verifiable on Stellar Explorer)
-![Tx Hash](https://via.placeholder.com/800x400/0C1117/10B981?text=Transaction+Result+on+Stellar+Expert)
+Transaction a86fbf26ad1e4197e27d393d82e739d95c4b83400fa2adf5b8548c6f30fe33c0
+https://stellar.expert/explorer/testnet/tx/a86fbf26ad1e4197e27d393d82e739d95c4b83400fa2adf5b8548c6f30fe33c0
 
 *Transaction result with link to Stellar Expert for verification*
 
