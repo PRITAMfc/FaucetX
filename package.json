@@ -12,7 +12,12 @@
     "dev:frontend": "cd frontend && bun run dev",
     "dev:backend": "cd backend && bun run dev",
     "build": "cd frontend && bun run build",
-    "start": "cd frontend && bun run preview"
+    "start": "cd frontend && bun run preview",
+    "start:backend": "cd backend && bun run start",
+    "test": "bun test",
+    "test:shared": "cd shared && bun test",
+    "test:frontend": "cd frontend && bun test",
+    "test:backend": "cd backend && bun test"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

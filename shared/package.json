@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "main": "src/index.ts",
+  "scripts": {
+    "test": "bun test"
+  },
   "dependencies": {
     "@stellar/stellar-sdk": "^11.3.0",
     "zod": "^3.22.4"
