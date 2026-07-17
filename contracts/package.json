@@ -1,0 +1,13 @@
+{
+  "name": "contracts",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^16.0.1"
+  }
+}
