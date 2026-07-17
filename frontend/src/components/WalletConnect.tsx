@@ -42,9 +42,9 @@ export function WalletConnect() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full"
       >
-        <div className="flex items-center justify-between p-3 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken">
-          <div className="flex items-center gap-3">
-            <KrakenLogo className="w-5 h-5" />
+        <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <KrakenLogo className="w-5 h-5 shrink-0" />
             <div className="flex items-center gap-2">
               <code className="text-xs font-mono text-kraken-black">
                 {address.slice(0, 6)}...{address.slice(-4)}
@@ -55,11 +55,11 @@ export function WalletConnect() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-semibold text-kraken-black">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-xs sm:text-sm font-semibold text-kraken-black">
               {balance ? `${parseFloat(balance).toFixed(2)} XLM` : '0.00 XLM'}
             </span>
-            <Badge variant="success" className="text-[10px] px-1.5 py-0">Testnet</Badge>
+            <Badge variant="success" className="text-[10px] px-1.5 py-0 hidden sm:inline-flex">Testnet</Badge>
             <Button variant="ghost" size="icon" className="h-7 w-7" onClick={disconnectWallet}>
               <Logout className="w-3.5 h-3.5 text-kraken-gray" />
             </Button>
@@ -71,11 +71,11 @@ export function WalletConnect() {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-sm mx-auto">
-      <div className="p-6 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken text-center space-y-4">
+      <div className="p-4 sm:p-6 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken text-center space-y-3 sm:space-y-4">
         <div className="mx-auto p-3 rounded-2xl bg-kraken-purple-subtle w-fit">
           <KrakenLogo className="w-10 h-10" />
         </div>
-        <h2 className="text-xl font-bold text-kraken-black">Connect Your Wallet</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-kraken-black">Connect Your Wallet</h2>
         <p className="text-sm text-kraken-gray">
           Freighter, Albedo, LOBSTR, xBull, Ledger & more
         </p>
