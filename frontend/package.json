@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "bun test"
   },
   "dependencies": {
     "@creit.tech/stellar-wallets-kit": "^2.1.0",
@@ -20,6 +21,7 @@
     "reicon-react": "^1.0.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
+    "fastestsmallesttextencoderdecoder": "^1.0.22",
     "zustand": "^4.5.0",
     "zod": "^3.22.4"
   },

@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: faucetx-backend
+    runtime: bun
+    rootDir: backend
+    buildCommand: bun install
+    startCommand: bun run src/index.ts
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: FRONTEND_URL
+        value: https://faucetx.vercel.app
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+      - key: MISTRAL_API_KEY
+        sync: false
+    healthCheckPath: /api/health
+    autoDeploy: true
