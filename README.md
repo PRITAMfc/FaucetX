@@ -4,7 +4,7 @@
 
 <div align="center">
 
-![FaucetX](https://via.placeholder.com/150x150/08B5E5/FFFFFF?text=FX)
+
 
 **Multi-Wallet Stellar dApp with Smart Contract Integration**
 
