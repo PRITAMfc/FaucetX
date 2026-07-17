@@ -22,6 +22,12 @@
 
 FaucetX is a **multi-wallet Stellar testnet dApp** with **Soroban smart contract integration**. Built for the **Stellar White Belt Level 2 Challenge**, it demonstrates:
 
+< - -  DEMO VIDEO - - >
+
+
+https://github.com/user-attachments/assets/5ea7799e-88c3-4a8d-91cc-9e9654e3b305
+
+
 - **Multi-Wallet Support** via StellarWalletsKit (Freighter, Albedo, LOBSTR, xBull, Ledger, and more)
 - **Error Handling** with 3 distinct error types: wallet not found, user rejected, insufficient balance
 - **Smart Contract Deployment** - Soroban contract on testnet with read/write operations
