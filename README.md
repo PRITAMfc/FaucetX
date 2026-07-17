@@ -238,14 +238,18 @@ FaucetX/
 ### Deployed Contract Address
 
 ```
-PASTE_YOUR_CONTRACT_ID_AFTER_DEPLOYMENT
+CCF4DJQGX53OPL27F4HU66D4VKPVOT3D2D4PAY4PB4OGTN77SEJQ2I6B
 ```
 
-### Sample Transaction Hash
+Verify: [Stellar Expert](https://stellar.expert/testnet/contract/CCF4DJQGX53OPL27F4HU66D4VKPVOT3D2D4PAY4PB4OGTN77SEJQ2I6B)
 
-```
-PASTE_YOUR_TX_HASH_AFTER_TESTING
-```
+### Sample Transaction Hashes
+
+| Action | Hash |
+|--------|------|
+| WASM Upload | `f295c89077fd121ed7e749e36470ded09afe5166b53a0288f7e2aac2805e857b` |
+| Contract Deploy | `418d0c174e744c9d47bcb12625e56a88f04949174bcd835f9a989ae37f3b38ee` |
+| Contract Init | `322c59cb3b1114434477819e26dc565d864bbcae6c4d3742c2bd50cda0e5919d` |
 
 Verify on: [Stellar Expert](https://stellar.expert/testnet)
 

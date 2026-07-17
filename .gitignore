@@ -7,6 +7,11 @@ node_modules/
 dist/
 build/
 .next/
+target/
+
+# Rust build artifacts
+contracts/*/target/
+contracts/*/node_modules/
 
 # Environment
 .env
@@ -35,3 +40,6 @@ coverage/
 
 # Misc
 *.tsbuildinfo
+
+# Deployment secrets (keep deployment.json but not secrets)
+contracts/deployment.json

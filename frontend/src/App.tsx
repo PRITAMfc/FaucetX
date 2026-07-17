@@ -2,6 +2,7 @@ import { WalletConnect } from '@/components/WalletConnect'
 import { BalanceDisplay } from '@/components/BalanceDisplay'
 import { SendTransaction } from '@/components/SendTransaction'
 import { ContractPanel } from '@/components/ContractPanel'
+import { FeedbackForm } from '@/components/FeedbackForm'
 import { useWallet } from '@/hooks/useWallet'
 import { Toaster } from 'react-hot-toast'
 import { motion } from 'framer-motion'
@@ -61,6 +62,8 @@ function App() {
               <ContractPanel />
             </>
           )}
+
+          <FeedbackForm />
 
           {!isConnected && (
             <motion.div
