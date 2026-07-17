@@ -1,6 +1,10 @@
+
+https://github.com/user-attachments/assets/73089702-5d52-4e34-bd03-250c5055cc47
 <div align="center">
 
-# <img src="https://github.com/user-attachments/assets/0983d352-b32d-4cd2-b6eb-56ad9e265622" width="100%" />
+<img width="1903" height="862" alt="image" src="https://github.com/user-attachments/assets/93eccfa2-f3bc-4892-9ccb-aebf5f5a060e" />
+
+<img width="1901" height="858" alt="image" src="https://github.com/user-attachments/assets/c405ccd8-3a6a-48e0-a0db-0d09ba1c67f2" />
 
 **Multi-Wallet Stellar Testnet Faucet with Soroban Smart Contract Integration**
 
@@ -28,7 +32,15 @@ _Built for the Stellar White Belt Level 2 Challenge_
 
 ## Overview
 
-https://github.com/user-attachments/assets/5ea7799e-88c3-4a8d-91cc-9e9654e3b305
+
+
+
+
+https://github.com/user-attachments/assets/df9f97ef-7d44-4e2c-9ec1-37ec2747bfbe
+
+
+
+
 
 <br/>
 
@@ -246,7 +258,9 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 
 ### Wallet Selection Modal
 
-<img width="1560" height="832" alt="image" src="https://github.com/user-attachments/assets/42612903-0fde-45ec-8bab-6953e900c205" />
+<img width="496" height="313" alt="image" src="https://github.com/user-attachments/assets/2a6efcc4-35a8-4eea-bdf7-4fec90f43d69" />
+<img width="1890" height="870" alt="image" src="https://github.com/user-attachments/assets/cffc6165-b876-4064-a830-e58a10cc20c9" />
+
 
 <div align="center"><i>StellarWalletsKit modal showing all available wallet options</i></div>
 
@@ -254,7 +268,8 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 
 ### Connected Wallet State
 
-<img width="1573" height="751" alt="image" src="https://github.com/user-attachments/assets/8bd302f1-85de-4bb0-8f33-db194bad6627" />
+<img width="1907" height="880" alt="image" src="https://github.com/user-attachments/assets/c0310966-942b-46cd-bc51-f175bb79faa4" />
+
 
 <div align="center"><i>Freighter wallet connected with address, network badge, and balance</i></div>
 
@@ -262,17 +277,19 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 
 ### Balance & Funding
 
-<img width="490" height="532" alt="image" src="https://github.com/user-attachments/assets/477e0fc8-f017-46c0-86f5-895631544314" />
+<img width="1502" height="547" alt="image" src="https://github.com/user-attachments/assets/9cbfb420-07da-45b3-8abd-42082eaf703d" />
+
 
 <div align="center"><i>XLM balance with Fund Wallet and Refresh buttons</i></div>
 
 <br/>
 
 ### Transaction Flow
+<img width="1857" height="825" alt="image" src="https://github.com/user-attachments/assets/666a6210-261b-475c-ac72-34f566797828" />
 
-<img width="1031" height="767" alt="image" src="https://github.com/user-attachments/assets/b1960cdf-9065-4266-88ca-ae1be0e2386c" />
 
-<img width="1736" height="717" alt="image" src="https://github.com/user-attachments/assets/2f194dec-70c5-4243-ab0a-dac345ca32ec" />
+<img width="1843" height="855" alt="image" src="https://github.com/user-attachments/assets/5f6faa72-535f-47b5-90e1-669888d15525" />
+
 
 <div align="center"><i>Real-time transaction status: Pending → Submitted → Success</i></div>
 
@@ -280,7 +297,8 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 
 ### Smart Contract Panel
 
-<img width="1830" height="767" alt="image" src="https://github.com/user-attachments/assets/a5a46596-6cfb-49a6-80d0-9ec0ab1a6524" />
+<img width="1843" height="855" alt="image" src="https://github.com/user-attachments/assets/8e431224-6df8-42f2-ba21-69391548aa83" />
+
 
 <div align="center"><i>Soroban smart contract interaction panel with live events</i></div>
 
