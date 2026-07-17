@@ -43,3 +43,5 @@ coverage/
 
 # Deployment secrets (keep deployment.json but not secrets)
 contracts/deployment.json
+
+.vercel

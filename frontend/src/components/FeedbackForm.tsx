@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useWallet } from '@/hooks/useWallet'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
@@ -44,7 +43,7 @@ export function FeedbackForm() {
       setResult(data)
       setFeedback('')
       toast.success('Feedback submitted!')
-    } catch (err) {
+    } catch {
       toast.error('Failed to submit feedback')
     }
     setLoading(false)
@@ -59,73 +58,67 @@ export function FeedbackForm() {
   }
 
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="w-full">
-      <Card className="stellar-card">
-        <CardHeader>
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-purple-500/20">
-              <MessageSquare className="w-5 h-5 text-purple-400" />
-            </div>
-            <div>
-              <CardTitle className="text-lg">Feedback</CardTitle>
-              <CardDescription>Powered by Mistral AI</CardDescription>
-            </div>
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+      <div className="p-5 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="p-1.5 rounded-lg bg-purple-500/20">
+            <MessageSquare className="w-4 h-4 text-purple-400" />
           </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <Textarea
-              placeholder="Share your experience with FaucetX..."
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              rows={3}
-              className="bg-white/5 border-white/10 focus:border-purple-500/50 resize-none"
-            />
-            <Button
-              type="submit"
-              variant="stellar"
-              disabled={loading || !feedback.trim()}
-              className="w-full"
-            >
-              {loading ? (
-                <span className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 animate-pulse" />
-                  Analyzing...
-                </span>
-              ) : (
-                <span className="flex items-center gap-2">
-                  <Send className="w-4 h-4" />
-                  Submit Feedback
-                </span>
-              )}
-            </Button>
-          </form>
+          <span className="text-sm font-semibold text-white">Feedback</span>
+          <span className="text-[10px] text-slate-500 ml-auto">Powered by Mistral AI</span>
+        </div>
 
-          <AnimatePresence>
-            {result && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="space-y-2"
-              >
-                <div className="flex gap-2">
-                  <Badge className={sentimentColor(result.sentiment)}>
-                    {result.sentiment}
-                  </Badge>
-                  <Badge variant="outline">{result.category}</Badge>
-                </div>
-                <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                  <div className="flex items-start gap-2">
-                    <Sparkles className="w-4 h-4 text-purple-400 mt-0.5 shrink-0" />
-                    <p className="text-sm text-purple-200">{result.aiResponse}</p>
-                  </div>
-                </div>
-              </motion.div>
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <Textarea
+            placeholder="Share your experience with FaucetX..."
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            rows={2}
+            className="bg-white/5 border-white/10 focus:border-purple-500/50 resize-none text-sm"
+          />
+          <Button
+            type="submit"
+            variant="stellar"
+            size="sm"
+            disabled={loading || !feedback.trim()}
+            className="w-full"
+          >
+            {loading ? (
+              <span className="flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+                Analyzing...
+              </span>
+            ) : (
+              <span className="flex items-center gap-1.5">
+                <Send className="w-3.5 h-3.5" />
+                Submit
+              </span>
             )}
-          </AnimatePresence>
-        </CardContent>
-      </Card>
+          </Button>
+        </form>
+
+        <AnimatePresence>
+          {result && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mt-3 space-y-2"
+            >
+              <div className="flex gap-1.5">
+                <Badge className={`${sentimentColor(result.sentiment)} text-[10px]`}>{result.sentiment}</Badge>
+                <Badge variant="outline" className="text-[10px]">{result.category}</Badge>
+              </div>
+              <div className="p-2.5 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                <div className="flex items-start gap-2">
+                  <Sparkles className="w-3 h-3 text-purple-400 mt-0.5 shrink-0" />
+                  <p className="text-xs text-purple-200">{result.aiResponse}</p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </motion.div>
   )
 }

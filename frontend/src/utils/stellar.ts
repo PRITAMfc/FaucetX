@@ -25,7 +25,7 @@ export async function fundAccount(address: string): Promise<boolean> {
 }
 
 export function isValidStellarAddress(address: string): boolean {
-  return /^[G-ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz0-9]{55,56}$/.test(address)
+  return /^[GHJKLMNPQRSTUVWXYZghjkmnpqrstuvwxyz0-9]{55,56}$/.test(address)
 }
 
 export function formatXLM(amount: string): string {

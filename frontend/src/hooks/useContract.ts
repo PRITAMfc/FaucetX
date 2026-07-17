@@ -1,15 +1,15 @@
 import { useCallback } from 'react'
 import { useWallet } from './useWallet'
 import { useWalletStore, TxStatus } from '@/stores/walletStore'
-import { FAUCET_CONTRACT_ID, TESTNET_NETWORK_PASSPHRASE, server } from '@/config/stellar'
-import { getWalletKit } from '@/config/walletKit'
+import { FAUCET_CONTRACT_ID, TESTNET_NETWORK_PASSPHRASE, server, sorobanServer } from '@/config/stellar'
+import { initWalletKit, StellarWalletsKit } from '@/config/walletKit'
 import { handleWalletError } from '@/utils/errors'
 import * as StellarSdk from '@stellar/stellar-sdk'
 
 export function useContract() {
   const { address, refreshBalance } = useWallet()
   const {
-    setTxStatus, setTxError, setLastTransaction, setContractData,
+    setTxStatus, setTxError, setLastTransaction,
     setError,
   } = useWalletStore()
 
@@ -17,24 +17,23 @@ export function useContract() {
 
   const readContract = useCallback(async (method: string, args?: StellarSdk.xdr.ScVal[]) => {
     if (!FAUCET_CONTRACT_ID) throw new Error('Contract not configured')
+    if (!address) throw new Error('Wallet not connected')
 
     try {
       const contract = new StellarSdk.Contract(FAUCET_CONTRACT_ID)
-      const sourceAccount = address
-        ? await server.loadAccount(address)
-        : await server.loadAccount(FAUCET_CONTRACT_ID)
+      const sourceAccount = await server.loadAccount(address)
 
       const transaction = new StellarSdk.TransactionBuilder(sourceAccount, {
-        fee: await server.fetchBaseFee(),
+        fee: String(await server.fetchBaseFee()),
         networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
       })
         .addOperation(contract.call(method, ...(args || [])))
         .setTimeout(30)
         .build()
 
-      const response = await server.simulateTransaction(transaction)
+      const response = await sorobanServer.simulateTransaction(transaction)
 
-      if (StellarSdk.SorobanRpc.isSimulateTransactionSuccess(response)) {
+      if ('result' in response) {
         return response.result
       }
 
@@ -57,12 +56,12 @@ export function useContract() {
     setTxError(null)
 
     try {
-      const kit = getWalletKit()
+      initWalletKit()
       const contract = new StellarSdk.Contract(FAUCET_CONTRACT_ID)
       const sourceAccount = await server.loadAccount(address)
 
       const transaction = new StellarSdk.TransactionBuilder(sourceAccount, {
-        fee: await server.fetchBaseFee(),
+        fee: String(await server.fetchBaseFee()),
         networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
       })
         .addOperation(contract.call(method, ...args))
@@ -71,7 +70,7 @@ export function useContract() {
 
       setTxStatus(TxStatus.SUBMITTED)
 
-      const { signedTxXdr } = await kit.signTransaction(transaction.toXDR(), {
+      const { signedTxXdr } = await StellarWalletsKit.signTransaction(transaction.toXDR(), {
         networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
         address,
       })
