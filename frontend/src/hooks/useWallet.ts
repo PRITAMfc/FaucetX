@@ -1,273 +1,270 @@
-import { useState, useCallback, useEffect } from 'react'
-import { useWalletStore } from '@/stores/walletStore'
-import {
-  getWalletBalance,
-  fundAccount,
-  sendXLM,
-  getAccountInfo,
-} from '@/utils/stellar'
-
-declare global {
-  interface Window {
-    freighterApi?: {
-      isConnected: () => Promise<boolean>
-      getAddress: () => Promise<string>
-      signTransaction: (xdr: string, opts?: { networkPassphrase?: string }) => Promise<string>
-    }
-    Albedo?: {
-      publicKey: (opts?: { network?: string }) => Promise<string>
-      pay: (opts: {
-        destination: string
-        amount: string
-        asset?: string
-        memo?: string
-        network?: string
-      }) => Promise<{ txhash: string }>
-    }
-  }
-}
-
-type WalletType = 'freighter' | 'albedo' | null
+import { useCallback, useEffect } from 'react'
+import { useWalletStore, TxStatus } from '@/stores/walletStore'
+import { getWalletKit } from '@/config/walletKit'
+import { server, TESTNET_NETWORK_PASSPHRASE } from '@/config/stellar'
+import { handleWalletError, WalletErrorType } from '@/utils/errors'
+import * as StellarSdk from '@stellar/stellar-sdk'
 
 export function useWallet() {
   const {
-    isConnected,
-    address,
-    balance,
-    isConnecting,
-    isFunding,
-    isSending,
-    lastTransaction,
-    error,
-    setConnected,
-    setAddress,
-    setBalance,
-    setConnecting,
-    setFunding,
-    setSending,
-    setLastTransaction,
-    setError,
-    disconnect,
+    isConnected, address, walletName, balance,
+    isConnecting, isFunding, isSending, txStatus, txError,
+    lastTransaction, contractData, error,
+    setAddress, setWalletName, setBalance, setConnected,
+    setConnecting, setFunding, setSending,
+    setTxStatus, setTxError, setLastTransaction,
+    setContractData, setError, disconnect,
   } = useWalletStore()
 
-  const [selectedWallet, setSelectedWallet] = useState<WalletType>(null)
-
-  const detectAvailableWallets = useCallback(async (): Promise<WalletType[]> => {
-    const wallets: WalletType[] = []
-
-    if (typeof window !== 'undefined') {
-      if (window.freighterApi) {
-        try {
-          const connected = await window.freighterApi.isConnected()
-          if (connected) wallets.push('freighter')
-        } catch {
-          // Freight not available
-        }
-      }
-
-      if (window.Albedo) {
-        wallets.push('albedo')
-      }
-    }
-
-    return wallets
-  }, [])
-
-  const connectWallet = useCallback(async (walletType: WalletType = 'freighter') => {
+  const connectWallet = useCallback(async () => {
     setConnecting(true)
     setError(null)
 
     try {
-      let walletAddress: string
+      const kit = getWalletKit()
 
-      if (walletType === 'freighter') {
-        if (!window.freighterApi) {
-          throw new Error('Freighter wallet not found. Please install the Freight browser extension.')
-        }
-        walletAddress = await window.freighterApi.getAddress()
-      } else if (walletType === 'albedo') {
-        if (!window.Albedo) {
-          throw new Error('Albedo wallet not found. Please visit albedo.link to use Albedo.')
-        }
-        walletAddress = await window.Albedo.publicKey({ network: 'testnet' })
-      } else {
-        throw new Error('No wallet selected')
-      }
+      await kit.openModal({
+        modalTitle: 'Connect to FaucetX',
+        onWalletSelected: async (option) => {
+          kit.setWallet(option.id)
+          const { address: walletAddress } = await kit.getAddress()
 
-      setAddress(walletAddress)
-      setSelectedWallet(walletType)
+          setAddress(walletAddress)
+          setWalletName(option.name || option.id)
+          setConnected(true)
 
-      const walletBalance = await getWalletBalance(walletAddress)
-      setBalance(walletBalance)
-
-      setConnected(true)
+          const walletBalance = await fetchBalance(walletAddress)
+          setBalance(walletBalance)
+        },
+      })
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to connect wallet'
-      setError(errorMessage)
-      throw err
+      const walletError = handleWalletError(err)
+      setError(`${walletError.message}: ${walletError.details}`)
     } finally {
       setConnecting(false)
     }
-  }, [setAddress, setBalance, setConnected, setConnecting, setError])
+  }, [setAddress, setWalletName, setBalance, setConnected, setConnecting, setError])
+
+  const fetchBalance = useCallback(async (addr: string): Promise<string> => {
+    try {
+      const account = await server.loadAccount(addr)
+      const xlmBalance = account.balances.find((b) => b.asset_type === 'native')
+      return xlmBalance ? xlmBalance.balance : '0'
+    } catch {
+      return '0'
+    }
+  }, [])
 
   const refreshBalance = useCallback(async () => {
     if (!address) return
-
     try {
-      const walletBalance = await getWalletBalance(address)
+      const walletBalance = await fetchBalance(address)
       setBalance(walletBalance)
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to refresh balance'
-      setError(errorMessage)
+      const walletError = handleWalletError(err)
+      setError(walletError.message)
     }
-  }, [address, setBalance, setError])
+  }, [address, fetchBalance, setBalance, setError])
 
   const fundWallet = useCallback(async () => {
     if (!address) return
-
     setFunding(true)
     setError(null)
 
     try {
-      await fundAccount(address)
+      const friendbotUrl = `https://friendbot.stellar.org?addr=${encodeURIComponent(address)}`
+      const response = await fetch(friendbotUrl)
+
+      if (!response.ok) {
+        const walletError = handleWalletError({ message: 'Friendbot funding failed' })
+        setError(`${walletError.message}: ${walletError.details}`)
+        return
+      }
+
+      await response.json()
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
       await refreshBalance()
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fund wallet'
-      setError(errorMessage)
-      throw err
+      const walletError = handleWalletError(err)
+      setError(`${walletError.message}: ${walletError.details}`)
     } finally {
       setFunding(false)
     }
   }, [address, refreshBalance, setFunding, setError])
 
-  const sendTransaction = useCallback(async (destination: string, amount: string) => {
-    if (!address || !selectedWallet) return
+  const sendTransaction = useCallback(async (destination: string, amount: string, memo?: string) => {
+    if (!address) return
 
     setSending(true)
+    setTxStatus(TxStatus.PENDING)
+    setTxError(null)
     setError(null)
 
     try {
-      if (selectedWallet === 'freighter') {
-        if (!window.freighterApi) {
-          throw new Error('Freighter wallet not available')
-        }
+      const kit = getWalletKit()
+      const sourceAccount = await server.loadAccount(address)
 
-        const sourceAccount = await getAccountInfo(address)
-        const { Server, TransactionBuilder, Operation, Networks, Asset } = await import('@stellar/stellar-sdk')
-
-        const server = new Server('https://horizon-testnet.stellar.org')
-        const sourceAccountData = await server.loadAccount(address)
-
-        const transaction = new TransactionBuilder(sourceAccountData, {
-          fee: await server.fetchBaseFee(),
-          networkPassphrase: Networks.TESTNET,
-        })
-          .addOperation(
-            Operation.payment({
-              destination,
-              asset: Asset.native(),
-              amount: amount.toString(),
-            })
-          )
-          .setTimeout(180)
-          .build()
-
-        const signedXdr = await window.freighterApi.signTransaction(
-          transaction.toXDR(),
-          { networkPassphrase: Networks.TESTNET }
+      const transaction = new StellarSdk.TransactionBuilder(sourceAccount, {
+        fee: await server.fetchBaseFee(),
+        networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
+      })
+        .addOperation(
+          StellarSdk.Operation.payment({
+            destination,
+            asset: StellarSdk.Asset.native(),
+            amount: amount.toString(),
+          })
         )
 
-        const { Server: HorizonServer } = await import('@stellar/stellar-sdk')
-        const horizonServer = new HorizonServer('https://horizon-testnet.stellar.org')
-        const result = await horizonServer.submitTransaction(
-          TransactionBuilder.fromXDR(signedXdr, Networks.TESTNET)
-        )
-
-        setLastTransaction({
-          hash: result.hash,
-          ledger: result.ledger,
-          successful: result.successful,
-          resultXdr: result.result_xdr || '',
-          createdAt: new Date().toISOString(),
-        })
-
-        await refreshBalance()
-        return result
-      } else if (selectedWallet === 'albedo') {
-        if (!window.Albedo) {
-          throw new Error('Albedo wallet not available')
-        }
-
-        const result = await window.Albedo.pay({
-          destination,
-          amount: amount.toString(),
-          asset: 'native',
-          network: 'testnet',
-        })
-
-        setLastTransaction({
-          hash: result.txhash,
-          ledger: 0,
-          successful: true,
-          resultXdr: '',
-          createdAt: new Date().toISOString(),
-        })
-
-        await refreshBalance()
-        return result
+      if (memo) {
+        transaction.addMemo(StellarSdk.Memo.text(memo))
       }
+
+      const builtTx = transaction.setTimeout(180).build()
+
+      setTxStatus(TxStatus.SUBMITTED)
+
+      const { signedTxXdr } = await kit.signTransaction(builtTx.toXDR(), {
+        networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
+        address,
+      })
+
+      const signedTx = StellarSdk.TransactionBuilder.fromXDR(
+        signedTxXdr,
+        TESTNET_NETWORK_PASSPHRASE
+      )
+
+      const result = await server.submitTransaction(signedTx)
+
+      setTxStatus(TxStatus.SUCCESS)
+      setLastTransaction({
+        hash: result.hash,
+        ledger: result.ledger || 0,
+        successful: true,
+        resultXdr: result.result_xdr || '',
+        createdAt: new Date().toISOString(),
+      })
+
+      await refreshBalance()
+      return result
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to send transaction'
-      setError(errorMessage)
+      const walletError = handleWalletError(err)
+      setTxStatus(TxStatus.FAILED)
+      setTxError(`${walletError.message}: ${walletError.details}`)
+      setError(walletError.message)
       throw err
     } finally {
       setSending(false)
     }
-  }, [address, selectedWallet, refreshBalance, setLastTransaction, setSending, setError])
+  }, [address, refreshBalance, setSending, setTxStatus, setTxError, setLastTransaction, setError])
 
-  const disconnectWallet = useCallback(() => {
+  const invokeContract = useCallback(async (
+    contractId: string,
+    method: string,
+    args: StellarSdk.xdr.ScVal[],
+    sourceAddress?: string
+  ) => {
+    const signerAddress = sourceAddress || address
+    if (!signerAddress) throw new Error('Wallet not connected')
+
+    setTxStatus(TxStatus.PENDING)
+
+    try {
+      const kit = getWalletKit()
+
+      const contract = new StellarSdk.Contract(contractId)
+      const sourceAccount = await server.loadAccount(signerAddress)
+
+      const transaction = new StellarSdk.TransactionBuilder(sourceAccount, {
+        fee: await server.fetchBaseFee(),
+        networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
+      })
+        .addOperation(contract.call(method, ...args))
+        .setTimeout(180)
+        .build()
+
+      setTxStatus(TxStatus.SUBMITTED)
+
+      const { signedTxXdr } = await kit.signTransaction(transaction.toXDR(), {
+        networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
+        address: signerAddress,
+      })
+
+      const signedTx = StellarSdk.TransactionBuilder.fromXDR(
+        signedTxXdr,
+        TESTNET_NETWORK_PASSPHRASE
+      )
+
+      const result = await server.submitTransaction(signedTx)
+
+      setTxStatus(TxStatus.SUCCESS)
+      setLastTransaction({
+        hash: result.hash,
+        ledger: result.ledger || 0,
+        successful: true,
+        resultXdr: result.result_xdr || '',
+        createdAt: new Date().toISOString(),
+      })
+
+      await refreshBalance()
+      return result
+    } catch (err) {
+      const walletError = handleWalletError(err)
+      setTxStatus(TxStatus.FAILED)
+      setTxError(`${walletError.message}: ${walletError.details}`)
+      throw err
+    }
+  }, [address, refreshBalance, setTxStatus, setTxError, setLastTransaction])
+
+  const disconnectWallet = useCallback(async () => {
+    try {
+      const kit = getWalletKit()
+      await kit.disconnect()
+    } catch {
+      // Ignore disconnect errors
+    }
     disconnect()
-    setSelectedWallet(null)
   }, [disconnect])
 
   useEffect(() => {
-    const checkConnection = async () => {
-      if (typeof window !== 'undefined' && window.freighterApi) {
-        try {
-          const connected = await window.freighterApi.isConnected()
-          if (connected) {
-            const walletAddress = await window.freighterApi.getAddress()
-            setAddress(walletAddress)
-            setSelectedWallet('freighter')
+    const checkAutoConnect = async () => {
+      try {
+        const kit = getWalletKit()
+        const storedAddress = localStorage.getItem('faucetx_address')
+        const storedName = localStorage.getItem('faucetx_walletName')
 
-            const walletBalance = await getWalletBalance(walletAddress)
-            setBalance(walletBalance)
-            setConnected(true)
-          }
-        } catch {
-          // Not connected
+        if (storedAddress && storedName) {
+          setAddress(storedAddress)
+          setWalletName(storedName)
+          setConnected(true)
+
+          const walletBalance = await fetchBalance(storedAddress)
+          setBalance(walletBalance)
         }
+      } catch {
+        // Ignore auto-connect errors
       }
     }
+    checkAutoConnect()
+  }, [])
 
-    checkConnection()
-  }, [setAddress, setBalance, setConnected])
+  useEffect(() => {
+    if (address && walletName) {
+      localStorage.setItem('faucetx_address', address)
+      localStorage.setItem('faucetx_walletName', walletName)
+    } else {
+      localStorage.removeItem('faucetx_address')
+      localStorage.removeItem('faucetx_walletName')
+    }
+  }, [address, walletName])
 
   return {
-    isConnected,
-    address,
-    balance,
-    isConnecting,
-    isFunding,
-    isSending,
-    lastTransaction,
-    error,
-    selectedWallet,
-    connectWallet,
-    refreshBalance,
-    fundWallet,
-    sendTransaction,
-    disconnectWallet,
-    detectAvailableWallets,
+    isConnected, address, walletName, balance,
+    isConnecting, isFunding, isSending, txStatus, txError,
+    lastTransaction, contractData, error,
+    connectWallet, refreshBalance, fundWallet,
+    sendTransaction, invokeContract, disconnectWallet,
+    WalletErrorType,
   }
 }

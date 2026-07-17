@@ -1,6 +1,7 @@
 import { WalletConnect } from '@/components/WalletConnect'
 import { BalanceDisplay } from '@/components/BalanceDisplay'
 import { SendTransaction } from '@/components/SendTransaction'
+import { ContractPanel } from '@/components/ContractPanel'
 import { useWallet } from '@/hooks/useWallet'
 import { Toaster } from 'react-hot-toast'
 import { motion } from 'framer-motion'
@@ -33,16 +34,19 @@ function App() {
             </h1>
           </div>
           <p className="text-slate-400 max-w-md mx-auto">
-            A Stellar testnet faucet and wallet dApp. Connect your wallet,
-            fund it with testnet XLM, and send transactions.
+            Multi-wallet Stellar dApp with smart contract integration.
+            Connect, fund, send, and interact with Soroban contracts.
           </p>
-          <div className="flex items-center justify-center gap-2 mt-4">
+          <div className="flex items-center justify-center gap-2 mt-4 flex-wrap">
             <span className="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-medium">
               Testnet
             </span>
             <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-medium">
               <Zap className="w-3 h-3 inline mr-1" />
-              Powered by Stellar
+              Multi-Wallet
+            </span>
+            <span className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-xs font-medium">
+              Soroban
             </span>
           </div>
         </motion.header>
@@ -54,6 +58,7 @@ function App() {
             <>
               <BalanceDisplay />
               <SendTransaction />
+              <ContractPanel />
             </>
           )}
 
@@ -78,37 +83,16 @@ function App() {
           transition={{ delay: 0.5 }}
           className="text-center mt-12 text-slate-500 text-sm"
         >
-          <p>
-            Built for Stellar White Belt Level 1 Challenge
-          </p>
+          <p>Built for Stellar White Belt Level 2 Challenge</p>
           <p className="mt-1">
             Powered by{' '}
-            <a
-              href="https://stellar.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan-400 hover:text-cyan-300 transition-colors"
-            >
-              Stellar
-            </a>{' '}
-            •{' '}
-            <a
-              href="https://reicon.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan-400 hover:text-cyan-300 transition-colors"
-            >
-              Reicon
-            </a>{' '}
-            •{' '}
-            <a
-              href="https://uiable.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan-400 hover:text-cyan-300 transition-colors"
-            >
-              UIAble
-            </a>
+            <a href="https://stellar.org" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">Stellar</a>
+            {' '}&bull;{' '}
+            <a href="https://stellarwalletskit.dev" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">WalletsKit</a>
+            {' '}&bull;{' '}
+            <a href="https://reicon.dev" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">Reicon</a>
+            {' '}&bull;{' '}
+            <a href="https://uiable.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">UIAble</a>
           </p>
         </motion.footer>
       </div>
