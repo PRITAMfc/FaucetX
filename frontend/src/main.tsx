@@ -4,7 +4,7 @@ import { ClerkProvider } from '@clerk/clerk-react'
 import App from './App'
 import './index.css'
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_bmVlZGVkLW11bGUtOTAuY2xlcmsuYWNjb3VudHMuZGV2JA'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
