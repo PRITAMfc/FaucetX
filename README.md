@@ -473,15 +473,6 @@ Verify on [Stellar Expert](https://stellar.expert/testnet)
 
 <br/>
 
-## Learning Outcomes
-
-By completing Level 2, I learned:
-
-1. **StellarWalletsKit** — Integrating multiple wallets with a single API
-2. **Error Handling** — Categorizing and handling wallet errors gracefully
-3. **Soroban Contracts** — Writing, deploying, and calling smart contracts from a dApp
-4. **Event Listening** — Polling contract events for real-time UI updates
-5. **Transaction Tracking** — Implementing pending/success/fail state machines with visual feedback
 
 <br/>
 
