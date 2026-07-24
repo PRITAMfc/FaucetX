@@ -1,0 +1,109 @@
+tsconfig.json
+  s_5a7069f4406e0a::t_675e764cdb37f2 20
+  s_5a7069f4406e0a::t_cd3c6cce314cdc 1-19,21-26
+src/components/SendTransaction.tsx
+  s_5a7069f4406e0a::t_51d3566ab770ff 1-173
+src/config/freighter.ts
+  s_5a7069f4406e0a::t_10217127bdd5f1 1-37
+src/index.css
+  s_5a7069f4406e0a::t_4322884d127244 1-115
+components.json
+  s_5a7069f4406e0a::t_e6f1db6c2ea709 1-20
+src/components/BalanceDisplay.tsx
+  s_5a7069f4406e0a::t_1a7a0191da12e3 1-74
+src/components/ui/spinner.tsx
+  s_5a7069f4406e0a::t_8f1283e1c8a954 1-29
+src/hooks/useContract.ts
+  s_5a7069f4406e0a::t_e816c3ba361e7f 1-144
+vercel.json
+  s_5a7069f4406e0a::t_39badcc6d6c799 2-3,16
+src/vite-env.d.ts
+  s_5a7069f4406e0a::t_cd5e0ac444afa1 1-19
+src/utils/stellar.test.ts
+  s_5a7069f4406e0a::t_2be1889f8a4b7c 1-40
+src/components/ui/progress.tsx
+  s_5a7069f4406e0a::t_2f56aa180c9506 1-32
+bun.lock
+  s_5a7069f4406e0a::t_45f78391a0ec45 31,542,708,906,1022,1096,1298,1314,1346,1520,1560,1622,1954-1955,2052,2068,2078-2081,2084,2086,2098,2160,2162-2164,2166-2168,2500,2508,2510,2518,2536-2540,2850-2853
+tailwind.config.js
+  s_5a7069f4406e0a::t_365352315c8cf6 1-73
+src/hooks/useWallet.ts
+  s_5a7069f4406e0a::t_992c55459c75f7 1-320
+package.json
+  s_5a7069f4406e0a::t_a6f24a744735c5 3,5,8,10-12,16,19-37,39-47
+src/components/ui/separator.tsx
+  s_5a7069f4406e0a::t_7da3825367719c 1-29
+src/components/ui/input.tsx
+  s_5a7069f4406e0a::t_1cce4f01d73ed4 1-24
+src/components/ui/kraken-logo.tsx
+  s_5a7069f4406e0a::t_65e3847188f5a2 1-23
+vite.config.ts
+  s_5a7069f4406e0a::t_f3ef81bc31c910 10
+  s_5a7069f4406e0a::t_3435a93cdfe42f 1-9,11-22
+tsconfig.node.json
+  s_5a7069f4406e0a::t_ed7fd42e36a942 1-10
+src/utils/stellar.ts
+  s_5a7069f4406e0a::t_1a3284d28ad0e0 1-33
+src/components/ui/button.tsx
+  s_5a7069f4406e0a::t_7d162a70a1d1f1 1-55
+src/components/ui/tooltip.tsx
+  s_5a7069f4406e0a::t_8ce6cfdd2568ea 1-18
+src/lib/utils.ts
+  s_5a7069f4406e0a::t_05bf903c0a3b20 1-6
+src/components/ContractPanel.tsx
+  s_5a7069f4406e0a::t_3c6d66aec6c34d 1-214
+src/utils/errors.test.ts
+  s_5a7069f4406e0a::t_8e79a0e0b47178 1-43
+src/stores/walletStore.ts
+  s_5a7069f4406e0a::t_b0320a65b2ad01 1-80
+src/components/ui/theme-toggle.tsx
+  s_5a7069f4406e0a::t_3a60218a1a88ae 1-20
+src/components/ui/alert.tsx
+  s_5a7069f4406e0a::t_e31a405aeeb1e5 1-52
+src/components/FeedbackForm.tsx
+  s_5a7069f4406e0a::t_2cea912992cee3 1-124
+src/main.tsx
+  s_5a7069f4406e0a::t_be2bbaf4745aa1 1-18
+index.html
+  s_5a7069f4406e0a::t_d0e490f266b5a9 1-13
+src/components/ui/label.tsx
+  s_5a7069f4406e0a::t_cd0b2d988b112e 1-19
+src/components/WalletConnect.tsx
+  s_5a7069f4406e0a::t_ad0ef5a1250fa1 1-180
+src/components/ui/avatar.tsx
+  s_5a7069f4406e0a::t_440d361f447244 1-47
+src/components/ui/card.tsx
+  s_5a7069f4406e0a::t_9669f18cba41c5 1-78
+src/config/walletKit.ts
+  s_5a7069f4406e0a::t_ad2cf76a5ed3b2 1-20
+src/utils/errors.ts
+  s_5a7069f4406e0a::t_6c48a14711096f 1-61
+src/components/ui/textarea.tsx
+  s_5a7069f4406e0a::t_3f18d66fb680ef 1-20
+src/config/stellar.ts
+  s_5a7069f4406e0a::t_cebf7a9c621e06 1-10
+src/contexts/ThemeContext.tsx
+  s_5a7069f4406e0a::t_2b350f83a0581e 1-42
+src/components/ui/badge.tsx
+  s_5a7069f4406e0a::t_193b9db1866670 1-43
+postcss.config.js
+  s_5a7069f4406e0a::t_d912f3541607fc 1-6
+src/App.tsx
+  s_5a7069f4406e0a::t_a6053463af81dd 1-227
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "6171dc6dc0275e23fbbf71370c331ed60b8e74ef",
+  "prompts": {},
+  "sessions": {
+    "s_5a7069f4406e0a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_06e073652ffeKJFRDdybbWoR7e",
+        "model": "unknown"
+      },
+      "human_author": null
+    }
+  }
+}
