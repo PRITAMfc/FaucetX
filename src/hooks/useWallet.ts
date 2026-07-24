@@ -8,8 +8,8 @@ import { handleWalletError, WalletErrorType } from '@/utils/errors'
 import * as StellarSdk from '@stellar/stellar-sdk'
 import {
   checkFreighterConnection,
-  getFreighterAddress,
   signWithFreighter,
+  requestAccess as freighterRequestAccess,
 } from '@/config/freighter'
 
 export function useWallet() {
@@ -28,12 +28,12 @@ export function useWallet() {
     setError(null)
 
     try {
-      const connected = await checkFreighterConnection()
-      if (!connected) {
-        throw new Error('Freighter wallet is not installed or connected')
+      // Request wallet permissions + public key (address)
+      const { address: walletAddress } = await freighterRequestAccess()
+      if (!walletAddress) {
+        throw new Error('Freighter wallet did not return an address')
       }
 
-      const walletAddress = await getFreighterAddress()
       setAddress(walletAddress)
       setConnected(true)
       setWalletName('Freighter')
@@ -55,7 +55,8 @@ export function useWallet() {
     try {
       const freighterAvailable = await checkFreighterConnection()
       if (freighterAvailable) {
-        const walletAddress = await getFreighterAddress()
+        // Request wallet permissions + public key (address)
+        const { address: walletAddress } = await freighterRequestAccess()
         setAddress(walletAddress)
         setConnected(true)
         setWalletName('Freighter')
