@@ -1,25 +1,49 @@
 {
   "name": "faucetx",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend",
-    "shared"
-  ],
+  "type": "module",
   "scripts": {
     "dev": "concurrently \"bun run dev:backend\" \"bun run dev:frontend\"",
-    "dev:frontend": "cd frontend && bun run dev",
+    "dev:frontend": "vite",
     "dev:backend": "cd backend && bun run dev",
-    "build": "cd frontend && bun run build",
-    "start": "cd frontend && bun run preview",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "start": "vite preview",
     "start:backend": "cd backend && bun run start",
     "test": "bun test",
     "test:shared": "cd shared && bun test",
-    "test:frontend": "cd frontend && bun test",
+    "test:frontend": "bun test",
     "test:backend": "cd backend && bun test"
   },
+  "dependencies": {
+    "@clerk/clerk-react": "^5.61.3",
+    "@clerk/ui": "^1.25.5",
+    "@creit.tech/stellar-wallets-kit": "^2.1.0",
+    "@stellar/freighter-api": "^6.0.1",
+    "@stellar/stellar-sdk": "^11.3.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "fastestsmallesttextencoderdecoder": "^1.0.22",
+    "framer-motion": "^11.15.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "reicon-react": "^1.0.0",
+    "tailwind-merge": "^2.2.1",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.22.4",
+    "zustand": "^4.5.0"
+  },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.0",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1"
   }
 }
