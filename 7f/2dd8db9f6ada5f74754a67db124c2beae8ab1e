@@ -1,0 +1,32 @@
+frontend/src/components/WalletConnect.tsx
+  s_5a7069f4406e0a::t_6fab0003c2ec83 6,9-10,14,16,20,22-35,74-76,91-92,98,100-135,137-167
+frontend/src/hooks/useWallet.ts
+  s_5a7069f4406e0a::t_15c1a89f60e870 169-178,207
+  s_5a7069f4406e0a::t_e61d82efde58ce 9-13,26-50,56-67
+  s_5a7069f4406e0a::t_b9b5444bc35524 234-243
+  s_5a7069f4406e0a::t_8706c6b10a7a0c 269
+  s_5a7069f4406e0a::t_a346cbfac322e0 316
+frontend/src/config/freighter.ts
+  s_5a7069f4406e0a::t_673d74501b1344 1-9,12-37
+  s_5a7069f4406e0a::t_1a193d8c37ddc4 10-11
+frontend/package.json
+  s_5a7069f4406e0a::t_3b3f4ac1999766 16
+bun.lock
+  s_5a7069f4406e0a::t_dfbead59234977 36,572,1610,1656,1850-1853,1898-1899,1906-1907,2226-2227,2238-2241
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "7f2dd8db9f6ada5f74754a67db124c2beae8ab1e",
+  "prompts": {},
+  "sessions": {
+    "s_5a7069f4406e0a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_06e073652ffeKJFRDdybbWoR7e",
+        "model": "unknown"
+      },
+      "human_author": "PRITAMfc <proumg2@gmail.com>"
+    }
+  }
+}
