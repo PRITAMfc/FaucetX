@@ -1,0 +1,21 @@
+src/config/freighter.ts
+  s_5a7069f4406e0a::t_ee4d605a0b646a 3,9-17,28-29,36,39,43-44,47
+src/hooks/useWallet.ts
+  s_5a7069f4406e0a::t_7780fba0c81e65 12,31-34,58-59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "dc340c529ec4f5f6b751edbaed53ad0b0e5f08dc",
+  "prompts": {},
+  "sessions": {
+    "s_5a7069f4406e0a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_06e073652ffeKJFRDdybbWoR7e",
+        "model": "unknown"
+      },
+      "human_author": "PRITAMfc <proumg2@gmail.com>"
+    }
+  }
+}
