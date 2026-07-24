@@ -1,9 +1,19 @@
 import {
   isConnected,
+  requestAccess,
   getAddress,
   signTransaction,
   getNetwork,
 } from '@stellar/freighter-api'
+
+/**
+ * Stellar wallet integration using @stellar/freighter-api.
+ *
+ * Demonstrates:
+ *  - Wallet permissions  -> requestAccess()
+ *  - Address retrieval   -> getAddress()
+ *  - Transaction signing -> signTransaction()
+ */
 
 export async function checkFreighterConnection(): Promise<boolean> {
   try {
@@ -15,23 +25,23 @@ export async function checkFreighterConnection(): Promise<boolean> {
 }
 
 export async function getFreighterAddress(): Promise<string> {
-  const address = await getAddress()
-  return address.address
+  const { address } = await getAddress()
+  return address
 }
 
 export async function signWithFreighter(
   txXdr: string,
   networkPassphrase: string
 ): Promise<string> {
-  const result = await signTransaction(txXdr, {
+  const { signedTxXdr } = await signTransaction(txXdr, {
     networkPassphrase,
   })
-  return result.signedTxXdr
+  return signedTxXdr
 }
 
 export async function getFreighterNetwork(): Promise<string> {
-  const network = await getNetwork()
-  return network.networkPassphrase
+  const { networkPassphrase } = await getNetwork()
+  return networkPassphrase
 }
 
-export { isConnected as freighterIsConnected } from '@stellar/freighter-api'
+export { isConnected, requestAccess, getAddress, signTransaction }
