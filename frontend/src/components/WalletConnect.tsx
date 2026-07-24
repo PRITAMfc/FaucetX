@@ -3,21 +3,36 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Spinner } from '@/components/ui/spinner'
 import { KrakenLogo } from '@/components/ui/kraken-logo'
-import { Logout, Copy, Check } from 'reicon-react'
+import { Logout, Copy, Check, Wallet, Download } from 'reicon-react'
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { checkFreighterConnection } from '@/config/freighter'
 
 export function WalletConnect() {
   const {
-    isConnected, address, balance,
+    isConnected, address, balance, walletName,
     isConnecting, error,
-    connectWallet, disconnectWallet,
+    connectWallet, connectFreighter, disconnectWallet,
   } = useWallet()
 
   const [copied, setCopied] = useState(false)
+  const [freighterInstalled, setFreighterInstalled] = useState<boolean | null>(null)
 
-  const handleConnect = async () => {
+  useEffect(() => {
+    checkFreighterConnection().then(setFreighterInstalled)
+  }, [])
+
+  const handleConnectFreighter = async () => {
+    try {
+      await connectFreighter()
+      toast.success('Connected with Freighter!')
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to connect')
+    }
+  }
+
+  const handleConnectMultiWallet = async () => {
     try {
       await connectWallet()
       toast.success('Wallet connected!')
@@ -56,6 +71,9 @@ export function WalletConnect() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            <Badge variant="success" className="text-[10px] px-1.5 py-0 hidden sm:inline-flex">
+              {walletName || 'Wallet'}
+            </Badge>
             <span className="text-xs sm:text-sm font-semibold text-kraken-black">
               {balance ? `${parseFloat(balance).toFixed(2)} XLM` : '0.00 XLM'}
             </span>
@@ -70,34 +88,83 @@ export function WalletConnect() {
   }
 
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-sm mx-auto">
-      <div className="p-4 sm:p-6 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken text-center space-y-3 sm:space-y-4">
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md mx-auto">
+      <div className="p-4 sm:p-6 rounded-2xl bg-card border border-kraken-border-gray shadow-kraken text-center space-y-4">
         <div className="mx-auto p-3 rounded-2xl bg-kraken-purple-subtle w-fit">
           <KrakenLogo className="w-10 h-10" />
         </div>
         <h2 className="text-lg sm:text-xl font-bold text-kraken-black">Connect Your Wallet</h2>
         <p className="text-sm text-kraken-gray">
-          Freighter, Albedo, LOBSTR, xBull, Ledger & more
+          Sign in with your preferred Stellar wallet to access the testnet faucet
         </p>
-        <Button
-          variant="stellar"
-          size="xl"
-          className="w-full"
-          onClick={handleConnect}
-          disabled={isConnecting}
-        >
-          {isConnecting ? (
-            <>
-              <Spinner className="mr-2" size="sm" />
-              Opening Wallet Selector...
-            </>
-          ) : (
-            <>
-              <KrakenLogo className="w-5 h-5 mr-2" />
-              Connect Multi-Wallet
-            </>
+
+        <div className="space-y-3">
+          <Button
+            variant="stellar"
+            size="xl"
+            className="w-full"
+            onClick={handleConnectFreighter}
+            disabled={isConnecting || freighterInstalled === false}
+          >
+            {isConnecting ? (
+              <>
+                <Spinner className="mr-2" size="sm" />
+                Connecting...
+              </>
+            ) : freighterInstalled === false ? (
+              <>
+                <Download className="w-5 h-5 mr-2" />
+                Install Freighter
+              </>
+            ) : (
+              <>
+                <Wallet className="w-5 h-5 mr-2" />
+                Connect with Freighter
+              </>
+            )}
+          </Button>
+
+          {freighterInstalled === false && (
+            <a
+              href="https://freighter.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-xs text-primary hover:underline"
+            >
+              Get Freighter →
+            </a>
           )}
-        </Button>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-kraken-border-gray" />
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="px-2 bg-card text-kraken-gray">or</span>
+            </div>
+          </div>
+
+          <Button
+            variant="outline"
+            size="lg"
+            className="w-full"
+            onClick={handleConnectMultiWallet}
+            disabled={isConnecting}
+          >
+            {isConnecting ? (
+              <>
+                <Spinner className="mr-2" size="sm" />
+                Opening Wallet Selector...
+              </>
+            ) : (
+              <>
+                <KrakenLogo className="w-5 h-5 mr-2" />
+                Multi-Wallet (Albedo, LOBSTR, xBull, Ledger & more)
+              </>
+            )}
+          </Button>
+        </div>
+
         {error && (
           <motion.div
             initial={{ opacity: 0 }}

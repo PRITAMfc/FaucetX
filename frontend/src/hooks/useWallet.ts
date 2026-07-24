@@ -6,6 +6,11 @@ import { initWalletKit, StellarWalletsKit } from '@/config/walletKit'
 import { server, TESTNET_NETWORK_PASSPHRASE } from '@/config/stellar'
 import { handleWalletError, WalletErrorType } from '@/utils/errors'
 import * as StellarSdk from '@stellar/stellar-sdk'
+import {
+  checkFreighterConnection,
+  getFreighterAddress,
+  signWithFreighter,
+} from '@/config/freighter'
 
 export function useWallet() {
   const {
@@ -18,11 +23,48 @@ export function useWallet() {
     setError, disconnect,
   } = useWalletStore()
 
+  const connectFreighter = useCallback(async () => {
+    setConnecting(true)
+    setError(null)
+
+    try {
+      const connected = await checkFreighterConnection()
+      if (!connected) {
+        throw new Error('Freighter wallet is not installed or connected')
+      }
+
+      const walletAddress = await getFreighterAddress()
+      setAddress(walletAddress)
+      setConnected(true)
+      setWalletName('Freighter')
+
+      const walletBalance = await fetchBalance(walletAddress)
+      setBalance(walletBalance)
+    } catch (err) {
+      const walletError = handleWalletError(err)
+      setError(`${walletError.message}: ${walletError.details}`)
+    } finally {
+      setConnecting(false)
+    }
+  }, [setAddress, setWalletName, setBalance, setConnected, setConnecting, setError])
+
   const connectWallet = useCallback(async () => {
     setConnecting(true)
     setError(null)
 
     try {
+      const freighterAvailable = await checkFreighterConnection()
+      if (freighterAvailable) {
+        const walletAddress = await getFreighterAddress()
+        setAddress(walletAddress)
+        setConnected(true)
+        setWalletName('Freighter')
+
+        const walletBalance = await fetchBalance(walletAddress)
+        setBalance(walletBalance)
+        return
+      }
+
       initWalletKit()
 
       const { address: walletAddress } = await StellarWalletsKit.authModal()
@@ -124,10 +166,16 @@ export function useWallet() {
 
       setTxStatus(TxStatus.SUBMITTED)
 
-      const { signedTxXdr } = await StellarWalletsKit.signTransaction(builtTx.toXDR(), {
-        networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
-        address,
-      })
+      let signedTxXdr: string
+      if (walletName === 'Freighter') {
+        signedTxXdr = await signWithFreighter(builtTx.toXDR(), TESTNET_NETWORK_PASSPHRASE)
+      } else {
+        const result = await StellarWalletsKit.signTransaction(builtTx.toXDR(), {
+          networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
+          address,
+        })
+        signedTxXdr = result.signedTxXdr
+      }
 
       const signedTx = StellarSdk.TransactionBuilder.fromXDR(
         signedTxXdr,
@@ -156,7 +204,7 @@ export function useWallet() {
     } finally {
       setSending(false)
     }
-  }, [address, refreshBalance, setSending, setTxStatus, setTxError, setLastTransaction, setError])
+  }, [address, walletName, refreshBalance, setSending, setTxStatus, setTxError, setLastTransaction, setError])
 
   const invokeContract = useCallback(async (
     contractId: string,
@@ -183,10 +231,16 @@ export function useWallet() {
 
       setTxStatus(TxStatus.SUBMITTED)
 
-      const { signedTxXdr } = await StellarWalletsKit.signTransaction(transaction.toXDR(), {
-        networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
-        address: signerAddress,
-      })
+      let signedTxXdr: string
+      if (walletName === 'Freighter') {
+        signedTxXdr = await signWithFreighter(transaction.toXDR(), TESTNET_NETWORK_PASSPHRASE)
+      } else {
+        const result = await StellarWalletsKit.signTransaction(transaction.toXDR(), {
+          networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
+          address: signerAddress,
+        })
+        signedTxXdr = result.signedTxXdr
+      }
 
       const signedTx = StellarSdk.TransactionBuilder.fromXDR(
         signedTxXdr,
@@ -212,7 +266,7 @@ export function useWallet() {
       setTxError(`${walletError.message}: ${walletError.details}`)
       throw err
     }
-  }, [address, refreshBalance, setTxStatus, setTxError, setLastTransaction])
+  }, [address, walletName, refreshBalance, setTxStatus, setTxError, setLastTransaction])
 
   const disconnectWallet = useCallback(async () => {
     try {
@@ -259,7 +313,7 @@ export function useWallet() {
     isConnected, address, walletName, balance,
     isConnecting, isFunding, isSending, txStatus, txError,
     lastTransaction, error,
-    connectWallet, refreshBalance, fundWallet,
+    connectWallet, connectFreighter, refreshBalance, fundWallet,
     sendTransaction, invokeContract, disconnectWallet,
     WalletErrorType,
   }
