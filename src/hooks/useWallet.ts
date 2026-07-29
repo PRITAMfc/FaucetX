@@ -1,11 +1,17 @@
 import { useCallback, useEffect } from 'react'
 import { useWalletStore, TxStatus } from '@/stores/walletStore'
 
+
 export { TxStatus }
+
 import { initWalletKit, StellarWalletsKit } from '@/config/walletKit'
+
 import { server, TESTNET_NETWORK_PASSPHRASE } from '@/config/stellar'
+
 import { handleWalletError, WalletErrorType } from '@/utils/errors'
+
 import * as StellarSdk from '@stellar/stellar-sdk'
+
 import {
   checkFreighterConnection,
   signWithFreighter,
