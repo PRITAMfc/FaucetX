@@ -1,15 +1,18 @@
 #![no_std]
 use soroban_sdk::{contract, contractimpl, contracttype, symbol_short, Address, Env, Symbol};
 
+
 const OWNER: Symbol = symbol_short!("OWNER");
 const MESSAGE: Symbol = symbol_short!("MESSAGE");
 const COUNTER: Symbol = symbol_short!("COUNTER");
+
 
 #[contracttype]
 pub enum DataKey {
     Owner,
     Message,
     Counter,
+    
 }
 
 #[contract]
