@@ -11,7 +11,9 @@ import { KrakenLogo } from '@/components/ui/kraken-logo'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { Shield, Lightning, Globe, ArrowRight, Wallet } from 'reicon-react'
 
+
 function LandingPage() {
+  
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <motion.header
