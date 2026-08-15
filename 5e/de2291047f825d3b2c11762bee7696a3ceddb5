@@ -1,0 +1,14 @@
+backend/src/queues/redis.ts
+  h_7aa35c57e7bf7b 10,29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "5ede2291047f825d3b2c11762bee7696a3ceddb5",
+  "prompts": {},
+  "humans": {
+    "h_7aa35c57e7bf7b": {
+      "author": "itsmypritam <pritamsdev2@gmail.com>"
+    }
+  }
+}
