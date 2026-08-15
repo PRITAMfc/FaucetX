@@ -532,7 +532,7 @@ CBE3LXOSOKBPOWGZ6HVJXAEYILPFXHCEFWMYQA7CJIR63JRCMIXEU7DC
 | Contract Deploy | `418d0c174e744c9d47bcb12625e56a88f04949174bcd835f9a989ae37f3b38ee` |
 | Contract Init | `322c59cb3b1114434477819e26dc565d864bbcae6c4d3742c2bd50cda0e5919d` |
 
-Verify on [Stellar Expert](https://stellar.expert/testnet)
+Verify on [Stellar Expert](https://stellar.expert/explorer/testnet)
 
 <br/>
 
