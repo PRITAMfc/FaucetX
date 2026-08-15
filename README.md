@@ -1,67 +1,73 @@
-
-https://github.com/user-attachments/assets/73089702-5d52-4e34-bd03-250c5055cc47
 <div align="center">
 
-<img width="1903" height="862" alt="image" src="https://github.com/user-attachments/assets/93eccfa2-f3bc-4892-9ccb-aebf5f5a060e" />
+<img width="1903" height="862" alt="FaucetX Dashboard Dark UI" src="https://github.com/user-attachments/assets/93eccfa2-f3bc-4892-9ccb-aebf5f5a060e" />
 
-<img width="1901" height="858" alt="image" src="https://github.com/user-attachments/assets/c405ccd8-3a6a-48e0-a0db-0d09ba1c67f2" />
+<img width="1901" height="858" alt="FaucetX Landing Page" src="https://github.com/user-attachments/assets/c405ccd8-3a6a-48e0-a0db-0d09ba1c67f2" />
 
-**Multi-Wallet Stellar Testnet Faucet with Soroban Smart Contract Integration**
+# FaucetX
+
+### Multi-Wallet Stellar Testnet Faucet with Soroban Smart Contract Integration
 
 _Built for the Stellar White Belt Level 2 Challenge_
 
 <br/>
 
 [![React](https://img.shields.io/badge/React_18-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
-[![Express](https://img.shields.io/badge/Express_4-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com)
-[![Stellar](https://img.shields.io/badge/Stellar_SDK-08B5E5?style=for-the-badge&logo=stellar&logoColor=white)](https://stellar.org)
-[![Soroban](https://img.shields.io/badge/Soroban_Contracts-08B5E5?style=for-the-badge)](https://soroban.stellar.org)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
+[![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![Bun](https://img.shields.io/badge/Bun_Runtime-FBF1F4?style=for-the-badge&logo=bun&logoColor=black)](https://bun.sh)
+[![Bun](https://img.shields.io/badge/Bun-FBF1F4?style=for-the-badge&logo=bun&logoColor=black)](https://bun.sh)
+[![Fastify](https://img.shields.io/badge/Fastify-000000?style=for-the-badge&logo=fastify&logoColor=white)](https://fastify.dev)
+[![BullMQ](https://img.shields.io/badge/BullMQ-FF0000?style=for-the-badge&logo=redis&logoColor=white)](https://github.com/taskforcesh/bullmq)
+[![Stellar](https://img.shields.io/badge/Stellar_SDK-08B5E5?style=for-the-badge&logo=stellar&logoColor=white)](https://stellar.org)
+[![Soroban](https://img.shields.io/badge/Soroban-08B5E5?style=for-the-badge)](https://soroban.stellar.org)
+[![Upstash](https://img.shields.io/badge/Upstash_Redis-00E396?style=for-the-badge&logo=redis&logoColor=white)](https://upstash.com)
+[![Mistral](https://img.shields.io/badge/Mistral_AI-FF7000?style=for-the-badge&logo=mistral-ai&logoColor=white)](https://mistral.ai)
+[![Zustand](https://img.shields.io/badge/Zustand-443E38?style=for-the-badge&logo=react&logoColor=white)](https://zustand-demo.pmnd.rs)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion)
+[![Zod](https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white)](https://zod.dev)
+[![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://netlify.com)
+[![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 <br/>
 
-<a href="#-features">Features</a> • <a href="#-quick-start">Quick Start</a> • <a href="#-screenshots">Screenshots</a> • <a href="#-project-structure">Structure</a> • <a href="#-deployment">Deploy</a>
+<a href="#-features">Features</a> •
+<a href="#-quick-start">Quick Start</a> •
+<a href="#-screenshots">Screenshots</a> •
+<a href="#-project-structure">Structure</a> •
+<a href="#-deployment">Deploy</a> •
+<a href="#-testing">Testing</a> •
+<a href="#-on-chain-verification">On-Chain Verification</a>
 
 </div>
 
 ---
 
-<br/>
-
 ## Overview
 
-
-
-
+<br/>
 
 https://github.com/user-attachments/assets/df9f97ef-7d44-4e2c-9ec1-37ec2747bfbe
 
-
-
-
-
 <br/>
 
-FaucetX is a **full-stack Stellar testnet faucet dApp** featuring multi-wallet connectivity, real-time transaction tracking, and Soroban smart contract interactions — all wrapped in a sleek dark UI.
+FaucetX is a **production-grade full-stack Stellar testnet faucet dApp** featuring multi-wallet connectivity, real-time transaction tracking, Soroban smart contract interactions, AI-powered feedback, and enterprise-grade backend infrastructure with BullMQ job processing, circuit breakers, rate limiting, and comprehensive monitoring — all wrapped in a sleek dark UI.
 
-- **Multi-Wallet Support** via StellarWalletsKit (Freighter, Albedo, LOBSTR, xBull, Ledger, and more)
-- **Error Handling** with 3 distinct error types: wallet not found, user rejected, insufficient balance
-- **Smart Contract Deployment** - Soroban contract on testnet with read/write operations
-- **Contract Interactions** - Call contract functions from the frontend
-- **Event Listening** - Real-time event polling from the Soroban contract
-- **Transaction Status Tracking** - Live pending/success/fail states with visual indicators
+<br/>
 
 ### What it does
 
 | Feature | Description |
 |---------|-------------|
 | **Multi-Wallet** | Connect via Freighter, Albedo, LOBSTR, xBull, Ledger, Trezor, WalletConnect & more |
-| **Fund Wallet** | Get free testnet XLM via Stellar Friendbot |
+| **Fund Wallet** | Get free testnet XLM via Stellar Friendbot with job queue processing |
 | **Send XLM** | Transfer testnet XLM with live status tracking |
 | **Smart Contracts** | Read/write Soroban contracts with event polling |
 | **AI Feedback** | Submit feedback analyzed by Mistral AI |
+| **Job Processing** | BullMQ queues with retries, scheduled jobs, and distributed locks |
+| **Rate Limiting** | Per-address rate limiting and global API protection |
+| **Monitoring** | Metrics, circuit breakers, health checks, and real-time dashboards |
 
 <br/>
 
@@ -74,7 +80,11 @@ FaucetX is a **full-stack Stellar testnet faucet dApp** featuring multi-wallet c
 </tr>
 <tr>
 <td><b>Backend</b></td>
-<td>Express.js, TypeScript, Bun runtime</td>
+<td>Fastify, TypeScript, Bun runtime</td>
+</tr>
+<tr>
+<td><b>Job Queue</b></td>
+<td>BullMQ with Redis, retries, backoff, scheduled jobs, workers</td>
 </tr>
 <tr>
 <td><b>Blockchain</b></td>
@@ -82,15 +92,11 @@ FaucetX is a **full-stack Stellar testnet faucet dApp** featuring multi-wallet c
 </tr>
 <tr>
 <td><b>Services</b></td>
-<td>Upstash Redis, Mistral AI</td>
+<td>Upstash Redis, Mistral AI, Zod validation</td>
 </tr>
 <tr>
-<td><b>Validation</b></td>
-<td>Zod schemas (shared between frontend & backend)</td>
-</tr>
-<tr>
-<td><b>Package Manager</b></td>
-<td>Bun (monorepo workspaces)</td>
+<td><b>CI/CD</b></td>
+<td>GitHub Actions, Netlify, Render</td>
 </tr>
 </table>
 
@@ -98,21 +104,23 @@ FaucetX is a **full-stack Stellar testnet faucet dApp** featuring multi-wallet c
 
 ---
 
-<br/>
-
 ## Mobile Responsiveness
 
-<img width="350" height="900" alt="7ac855b7-ecad-4f91-bb25-6ab63e6c999b" src="https://github.com/user-attachments/assets/16636bb6-18bf-4034-b245-4b68f538b082" />
+<br/>
+
+<img width="350" height="900" alt="Mobile view 1" src="https://github.com/user-attachments/assets/16636bb6-18bf-4034-b245-4b68f538b082" />
 
 <br/>
-<img width="350" height="900" alt="54d00183-6718-43c1-a301-aea00443e0b5" src="https://github.com/user-attachments/assets/041fc4f0-c945-4fac-ad5f-b72ab7995bac" />
 
+<img width="350" height="900" alt="Mobile view 2" src="https://github.com/user-attachments/assets/041fc4f0-c945-4fac-ad5f-b72ab7995bac" />
 
+<br/>
 
-
-
+---
 
 ## Features
+
+<br/>
 
 ### Multi-Wallet Integration
 
@@ -207,11 +215,22 @@ IDLE → PENDING → SUBMITTED → SUCCESS
 
 Contract events are polled every 10 seconds and displayed in the UI.
 
+### Backend Architecture
+
+| Component | Technology |
+|-----------|-----------|
+| **Job Processing** | BullMQ with 6 queues (faucet, feedback, analytics, maintenance, rate-limit, cache) |
+| **Rate Limiting** | Per-address rate limits + global Fastify middleware |
+| **Circuit Breaker** | Friendbot API resilience with auto-recovery |
+| **Caching** | Upstash Redis with TTL, invalidation, and cache warming |
+| **Distributed Locks** | Redis-backed locks with auto-extend and TTL |
+| **Metrics** | Counters, timings, gauges, health metrics, and Prometheus-style keys |
+| **Scheduled Jobs** | Cron-based cleanup, aggregation, and health checks |
+| **AI Agent** | Mastra agent with Mistral AI for feedback analysis |
+
 <br/>
 
 ---
-
-<br/>
 
 ## Quick Start
 
@@ -254,7 +273,7 @@ chmod +x contracts/deploy.sh
 ./contracts/deploy.sh
 ```
 
-Then add the contract ID to `frontend/.env`:
+Then add the contract ID to `.env`:
 
 ```
 VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
@@ -264,17 +283,19 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 
 ---
 
-<br/>
-
 ## Screenshots
 
 ### Wallet Selection Modal
 
-<img width="496" height="313" alt="image" src="https://github.com/user-attachments/assets/2a6efcc4-35a8-4eea-bdf7-4fec90f43d69" />
+<br/>
+
+<img width="496" height="313" alt="Wallet Selection Modal" src="https://github.com/user-attachments/assets/2a6efcc4-35a8-4eea-bdf7-4fec90f43d69" />
 
 <br/>
-<img width="1890" height="870" alt="image" src="https://github.com/user-attachments/assets/cffc6165-b876-4064-a830-e58a10cc20c9" />
 
+<img width="1890" height="870" alt="Wallet Options" src="https://github.com/user-attachments/assets/cffc6165-b876-4064-a830-e58a10cc20c9" />
+
+<br/>
 
 <div align="center"><i>StellarWalletsKit modal showing all available wallet options</i></div>
 
@@ -282,8 +303,11 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 
 ### Connected Wallet State
 
-<img width="1907" height="880" alt="image" src="https://github.com/user-attachments/assets/c0310966-942b-46cd-bc51-f175bb79faa4" />
+<br/>
 
+<img width="1907" height="880" alt="Connected Wallet" src="https://github.com/user-attachments/assets/c0310966-942b-46cd-bc51-f175bb79faa4" />
+
+<br/>
 
 <div align="center"><i>Freighter wallet connected with address, network badge, and balance</i></div>
 
@@ -291,19 +315,27 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 
 ### Balance & Funding
 
-<img width="1502" height="547" alt="image" src="https://github.com/user-attachments/assets/9cbfb420-07da-45b3-8abd-42082eaf703d" />
+<br/>
 
+<img width="1502" height="547" alt="Balance & Funding" src="https://github.com/user-attachments/assets/9cbfb420-07da-45b3-8abd-42082eaf703d" />
+
+<br/>
 
 <div align="center"><i>XLM balance with Fund Wallet and Refresh buttons</i></div>
 
 <br/>
 
 ### Transaction Flow
-<img width="1857" height="825" alt="image" src="https://github.com/user-attachments/assets/666a6210-261b-475c-ac72-34f566797828" />
 
+<br/>
 
-<img width="1843" height="855" alt="image" src="https://github.com/user-attachments/assets/5f6faa72-535f-47b5-90e1-669888d15525" />
+<img width="1857" height="825" alt="Transaction Flow 1" src="https://github.com/user-attachments/assets/666a6210-261b-475c-ac72-34f566797828" />
 
+<br/>
+
+<img width="1843" height="855" alt="Transaction Flow 2" src="https://github.com/user-attachments/assets/5f6faa72-535f-47b5-90e1-669888d15525" />
+
+<br/>
 
 <div align="center"><i>Real-time transaction status: Pending → Submitted → Success</i></div>
 
@@ -311,8 +343,11 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 
 ### Smart Contract Panel
 
-<img width="1843" height="855" alt="image" src="https://github.com/user-attachments/assets/8e431224-6df8-42f2-ba21-69391548aa83" />
+<br/>
 
+<img width="1843" height="855" alt="Smart Contract Panel" src="https://github.com/user-attachments/assets/8e431224-6df8-42f2-ba21-69391548aa83" />
+
+<br/>
 
 <div align="center"><i>Soroban smart contract interaction panel with live events</i></div>
 
@@ -329,9 +364,9 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 
 ---
 
-<br/>
-
 ## Project Structure
+
+<br/>
 
 ```
 FaucetX/
@@ -356,26 +391,41 @@ FaucetX/
 │           ├── errors.ts           # 3 error types
 │           └── stellar.ts          # Address validation, formatting
 │
-├── backend/                        # Express API server
+├── backend/                        # Fastify API server
 │   └── src/
 │       ├── routes/
 │       │   ├── wallet.ts           # Balance, fund, contract APIs
 │       │   ├── transaction.ts      # TX validation + network info
-│       │   └── feedback.ts         # AI feedback + Redis storage
+│       │   ├── feedback.ts         # AI feedback + Redis storage
+│       │   ├── analytics.ts        # Event tracking + metrics
+│       │   └── queues.ts           # Queue management APIs
 │       ├── middleware/
-│       │   └── errorHandler.ts     # Global error handler
+│       │   └── rateLimiter.ts      # Global rate limiting
+│       ├── mastra/
+│       │   └── agent.ts            # Mastra AI agent (Mistral)
+│       ├── queues/
+│       │   ├── processors/         # Job processors (faucet, feedback, analytics, maintenance)
+│       │   ├── schedulers/         # Cron job scheduling
+│       │   ├── locks/              # Distributed locking
+│       │   ├── cache/              # Cache management
+│       │   ├── metrics/            # Metrics collection
+│       │   ├── events/             # Event bus
+│       │   └── types.ts            # Queue types
 │       └── utils/
+│           ├── wallet.ts           # Stellar Horizon + Friendbot helpers
 │           ├── mistral.ts          # Mistral AI integration
-│           └── redis.ts            # Upstash Redis client
+│           └── transaction.ts      # Transaction validation
 │
 ├── contracts/                      # Soroban smart contract
 │   ├── faucet-contract/
 │   │   ├── src/lib.rs              # Contract logic
 │   │   └── Cargo.toml
 │   ├── deploy.sh                   # Shell deployment script
-│   └── deploy.mjs                  # JS deployment script
+│   ├── deploy.mjs                  # JS deployment script
+│   ├── fund-testnet-wallets.mjs    # Testnet wallet funding generator
+│   └── testnet-interactions.json   # 12 testnet wallet TX records
 │
-└── shared/                         # Shared types & Zod schemas
+└── shared/                         # Shared Zod schemas & types
     └── src/index.ts
 ```
 
@@ -383,15 +433,17 @@ FaucetX/
 
 ---
 
-<br/>
-
 ## Deployment
+
+<br/>
 
 | Service | URL | Purpose |
 |---------|-----|---------|
 | **Frontend** | [mylulu67.netlify.app](https://mylulu67.netlify.app) | React SPA on Netlify |
-| **Backend** | [faucetx.onrender.com](https://faucetx.onrender.com) | Express API on Render |
+| **Backend** | [faucetx.onrender.com](https://faucetx.onrender.com) | Fastify API on Render |
 | **Smart Contract** | [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CBE3LXOSOKBPOWGZ6HVJXAEYILPFXHCEFWMYQA7CJIR63JRCMIXEU7DC) | Soroban on Testnet |
+
+<br/>
 
 ### CI/CD
 
@@ -403,19 +455,19 @@ FaucetX/
 
 ---
 
-<br/>
-
 ## CI/CD — Passing Test Cases
 
-<img width="1918" height="847" alt="image" src="https://github.com/user-attachments/assets/86ecfb11-7f24-4941-a617-f9a407022449" />
+<br/>
+
+<img width="1918" height="847" alt="CI/CD Test Results" src="https://github.com/user-attachments/assets/86ecfb11-7f24-4941-a617-f9a407022449" />
 
 <br/>
 
 ---
 
-<br/>
-
 ## Testing
+
+<br/>
 
 ```bash
 # Run all tests
@@ -432,8 +484,6 @@ bun run test:backend    # 4 tests  — Transaction schema validation
 <br/>
 
 ---
-
-<br/>
 
 ## Submission Checklist
 
@@ -453,13 +503,26 @@ bun run test:backend    # 4 tests  — Transaction schema validation
 <tr><td>User feedback collection</td><td>✅ AI-powered feedback form (Mistral + Redis)</td></tr>
 <tr><td>Production deployment</td><td>✅ Netlify + Render</td></tr>
 <tr><td>Analytics / monitoring</td><td>✅ Upstash Redis + GitHub Actions CI</td></tr>
+<tr><td>Job processing with retries</td><td>✅ BullMQ queues with exponential backoff</td></tr>
+<tr><td>Rate limiting & security</td><td>✅ Per-address limits + global API protection</td></tr>
+<tr><td>Circuit breaker & caching</td><td>✅ Redis caching with TTL and circuit breaker pattern</td></tr>
 </table>
+
+<br/>
+
+---
+
+## On-Chain Verification
+
+<br/>
 
 ### Deployed Contract
 
 ```
 CBE3LXOSOKBPOWGZ6HVJXAEYILPFXHCEFWMYQA7CJIR63JRCMIXEU7DC
 ```
+
+<br/>
 
 ### Sample Transaction Hashes
 
@@ -472,6 +535,8 @@ CBE3LXOSOKBPOWGZ6HVJXAEYILPFXHCEFWMYQA7CJIR63JRCMIXEU7DC
 Verify on [Stellar Expert](https://stellar.expert/testnet)
 
 <br/>
+
+<a name="on-chain-wallet-interactions-12-testnet-wallets"></a>
 
 ### On-Chain Wallet Interactions (12 testnet wallets)
 
@@ -499,6 +564,8 @@ hash is verifiable on Stellar Expert / Horizon.
 | 11 | Jahanara Begum | 01623456789 | [`GBAQ7D6CUPVHKRWI3ECT33PXLKI3QLA4ZWUSQ5CCYYIP5BFBPCKLIQX3`](https://stellar.expert/explorer/testnet/account/GBAQ7D6CUPVHKRWI3ECT33PXLKI3QLA4ZWUSQ5CCYYIP5BFBPCKLIQX3) | [`574c3ba469bc1236173a0e00652945ab5c4ac6ce1ac4e49a3ff81f909279216b`](https://stellar.expert/explorer/testnet/tx/574c3ba469bc1236173a0e00652945ab5c4ac6ce1ac4e49a3ff81f909279216b) | 2 XLM |
 | 12 | Mizanur Rahman | 01523456789 | [`GCSH5EQGV2VWFYUDYRLZZOOPDE2GLXWIRS5DBWUZCLYCJJQIJIH5M55M`](https://stellar.expert/explorer/testnet/account/GCSH5EQGV2VWFYUDYRLZZOOPDE2GLXWIRS5DBWUZCLYCJJQIJIH5M55M) | [`94e4d92e99c7360aa334e80aeabb2c44b0eedac6c1bd022424cbc8bc1de9756a`](https://stellar.expert/explorer/testnet/tx/94e4d92e99c7360aa334e80aeabb2c44b0eedac6c1bd022424cbc8bc1de9756a) | 2 XLM |
 
+<br/>
+
 The full log is saved in
 [`contracts/testnet-interactions.json`](contracts/testnet-interactions.json) and
 the generator script in [`contracts/fund-testnet-wallets.mjs`](contracts/fund-testnet-wallets.mjs).
@@ -506,22 +573,13 @@ Wallet secret keys are intentionally **not** committed to the repository.
 
 <br/>
 
-<br/>
-
 ---
-
-<br/>
-
-
-<br/>
-
----
-
-<br/>
 
 <div align="center">
 
 **Built with Stellar** • **Powered by Soroban** • **Deployed on Netlify + Render**
+
+<br/>
 
 [![Stellar](https://img.shields.io/badge/-Stellar-08B5E5?style=for-the-badge&logo=stellar&logoColor=white)](https://stellar.org)
 [![Soroban](https://img.shields.io/badge/-Soroban-08B5E5?style=for-the-badge)](https://soroban.stellar.org)
