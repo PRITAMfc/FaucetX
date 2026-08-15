@@ -23,9 +23,9 @@ interface WalletState {
   contractData: Record<string, string>
   error: string | null
 
-  setAddress: (address: string) => void
-  setWalletName: (name: string) => void
-  setBalance: (balance: string) => void
+  setAddress: (address: string | null) => void
+  setWalletName: (name: string | null) => void
+  setBalance: (balance: string | null) => void
   setConnected: (connected: boolean) => void
   setConnecting: (connecting: boolean) => void
   setFunding: (funding: boolean) => void

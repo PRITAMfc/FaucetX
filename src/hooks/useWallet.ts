@@ -16,6 +16,7 @@ import {
   checkFreighterConnection,
   signWithFreighter,
   requestAccess as freighterRequestAccess,
+  getAddress as getFreighterAddress,
 } from '@/config/freighter'
 
 export function useWallet() {
@@ -34,7 +35,6 @@ export function useWallet() {
     setError(null)
 
     try {
-      // Request wallet permissions + public key (address)
       const { address: walletAddress } = await freighterRequestAccess()
       if (!walletAddress) {
         throw new Error('Freighter wallet did not return an address')
@@ -61,8 +61,11 @@ export function useWallet() {
     try {
       const freighterAvailable = await checkFreighterConnection()
       if (freighterAvailable) {
-        // Request wallet permissions + public key (address)
         const { address: walletAddress } = await freighterRequestAccess()
+        if (!walletAddress) {
+          throw new Error('Freighter wallet did not return an address')
+        }
+
         setAddress(walletAddress)
         setConnected(true)
         setWalletName('Freighter')
@@ -75,18 +78,27 @@ export function useWallet() {
       initWalletKit()
 
       const { address: walletAddress } = await StellarWalletsKit.authModal()
-
-      setAddress(walletAddress)
+      if (!walletAddress) {
+        throw new Error('Wallet did not return an address')
+      }
 
       const { address: storedAddress } = await StellarWalletsKit.getAddress()
-      setAddress(storedAddress || walletAddress)
+      const finalAddress = storedAddress || walletAddress
+      if (!finalAddress) {
+        throw new Error('Wallet address is empty')
+      }
 
+      setAddress(finalAddress)
       setConnected(true)
 
-      const walletBalance = await fetchBalance(storedAddress || walletAddress)
+      const walletBalance = await fetchBalance(finalAddress)
       setBalance(walletBalance)
       setWalletName('Wallet')
     } catch (err) {
+      setAddress(null)
+      setConnected(false)
+      setWalletName(null)
+      setBalance(null)
       const walletError = handleWalletError(err)
       setError(`${walletError.message}: ${walletError.details}`)
     } finally {
@@ -142,8 +154,38 @@ export function useWallet() {
     }
   }, [address, refreshBalance, setFunding, setError])
 
+  const verifyWalletAvailable = useCallback(async (): Promise<boolean> => {
+    if (!address || !walletName) return false
+
+    try {
+      if (walletName === 'Freighter') {
+        const { address: currentAddress } = await getFreighterAddress()
+        return currentAddress === address
+      }
+
+      initWalletKit()
+      const { address: currentAddress } = await StellarWalletsKit.getAddress()
+      return currentAddress === address
+    } catch {
+      return false
+    }
+  }, [address, walletName])
+
   const sendTransaction = useCallback(async (destination: string, amount: string, memo?: string) => {
-    if (!address) return
+    if (!address) {
+      setError('Please set the wallet first')
+      return
+    }
+
+    const walletAvailable = await verifyWalletAvailable()
+    if (!walletAvailable) {
+      setError('Wallet is not available. Please reconnect your wallet.')
+      setConnected(false)
+      setAddress(null)
+      setWalletName(null)
+      setBalance(null)
+      return
+    }
 
     setSending(true)
     setTxStatus(TxStatus.PENDING)
@@ -211,7 +253,7 @@ export function useWallet() {
     } finally {
       setSending(false)
     }
-  }, [address, walletName, refreshBalance, setSending, setTxStatus, setTxError, setLastTransaction, setError])
+  }, [address, walletName, verifyWalletAvailable, refreshBalance, setSending, setTxStatus, setTxError, setLastTransaction, setError, setConnected, setAddress, setWalletName, setBalance])
 
   const invokeContract = useCallback(async (
     contractId: string,
@@ -292,12 +334,22 @@ export function useWallet() {
         const storedName = localStorage.getItem('faucetx_walletName')
 
         if (storedAddress && storedName) {
-          setAddress(storedAddress)
-          setWalletName(storedName)
-          setConnected(true)
+          const available = await verifyWalletAvailable()
+          if (available) {
+            setAddress(storedAddress)
+            setWalletName(storedName)
+            setConnected(true)
 
-          const walletBalance = await fetchBalance(storedAddress)
-          setBalance(walletBalance)
+            const walletBalance = await fetchBalance(storedAddress)
+            setBalance(walletBalance)
+          } else {
+            localStorage.removeItem('faucetx_address')
+            localStorage.removeItem('faucetx_walletName')
+            setAddress(null)
+            setWalletName(null)
+            setConnected(false)
+            setBalance(null)
+          }
         }
       } catch {
         // Ignore auto-connect errors
