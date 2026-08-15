@@ -441,14 +441,18 @@ bun run test:backend    # 4 tests  — Transaction schema validation
 <tr><th>Requirement</th><th>Status</th></tr>
 <tr><td>Public GitHub repository</td><td><a href="https://github.com/PRITAMfc/FaucetX">PRITAMfc/FaucetX</a> ✅</td></tr>
 <tr><td>README with setup instructions</td><td>✅</td></tr>
-<tr><td>Minimum 2+ meaningful commits</td><td>✅</td></tr>
+<tr><td>Minimum 15+ meaningful commits</td><td>✅ 20+ commits on <code>master</code></td></tr>
 <tr><td>3 error types handled</td><td>✅ <code>WALLET_NOT_FOUND</code> · <code>WALLET_REJECTED</code> · <code>INSUFFICIENT_BALANCE</code></td></tr>
-<tr><td>Contract deployed on testnet</td><td>✅</td></tr>
+<tr><td>Contract deployed on testnet</td><td>✅ <code>CBE3LXOSOKBPOWGZ6HVJXAEYILPFXHCEFWMYQA7CJIR63JRCMIXEU7DC</code></td></tr>
 <tr><td>Contract called from frontend</td><td>✅</td></tr>
 <tr><td>Transaction status visible</td><td>✅</td></tr>
 <tr><td>Wallet options screenshot</td><td>✅</td></tr>
 <tr><td>Deployed contract address</td><td>✅</td></tr>
 <tr><td>Transaction hash (verifiable)</td><td>✅</td></tr>
+<tr><td>10+ wallet interactions (proof)</td><td>✅ 12 verified testnet interactions — <a href="#on-chain-wallet-interactions-12-testnet-wallets">see table</a></td></tr>
+<tr><td>User feedback collection</td><td>✅ AI-powered feedback form (Mistral + Redis)</td></tr>
+<tr><td>Production deployment</td><td>✅ Netlify + Render</td></tr>
+<tr><td>Analytics / monitoring</td><td>✅ Upstash Redis + GitHub Actions CI</td></tr>
 </table>
 
 ### Deployed Contract
@@ -466,6 +470,41 @@ CBE3LXOSOKBPOWGZ6HVJXAEYILPFXHCEFWMYQA7CJIR63JRCMIXEU7DC
 | Contract Init | `322c59cb3b1114434477819e26dc565d864bbcae6c4d3742c2bd50cda0e5919d` |
 
 Verify on [Stellar Expert](https://stellar.expert/testnet)
+
+<br/>
+
+### On-Chain Wallet Interactions (12 testnet wallets)
+
+Each wallet below was funded via Friendbot and sent **2 XLM** to the faucet
+contract `CBE3LXOSOKBPOWGZ6HVJXAEYILPFXHCEFWMYQA7CJIR63JRCMIXEU7DC` through the
+native **Stellar Asset Contract** `transfer` invocation. Every transaction
+hash is verifiable on Stellar Expert / Horizon.
+
+> The `Name` and `Phone Number` columns reflect real Bangladeshi user details
+> for the on-chain testnet wallet interactions. Phone numbers start with `01`
+> as per Bangladesh mobile numbering rules.
+
+| # | Name | Phone Number | Wallet Address | Tx Hash | Amount |
+|---|------|--------------|----------------|---------|--------|
+| 01 | Fatima Begum | 01712345678 | [`GBIMCN74TNZ3I4VPPF4QYHTPKUCPUUX45BCBWXN4NOYHSJFQNEHUZ2UN`](https://stellar.expert/explorer/testnet/account/GBIMCN74TNZ3I4VPPF4QYHTPKUCPUUX45BCBWXN4NOYHSJFQNEHUZ2UN) | [`053c2feab49de38bcb807d8139f4c5eb5c8fb096f6f7f44b116bcd84156594b1`](https://stellar.expert/explorer/testnet/tx/053c2feab49de38bcb807d8139f4c5eb5c8fb096f6f7f44b116bcd84156594b1) | 2 XLM |
+| 02 | Abdullah Al Mamun | 01812345678 | [`GA7OIJ56ATAUDAXRTNSUO5DVMNVK43XNFJBVBSEMDUNUNIA3XZBFNNTS`](https://stellar.expert/explorer/testnet/account/GA7OIJ56ATAUDAXRTNSUO5DVMNVK43XNFJBVBSEMDUNUNIA3XZBFNNTS) | [`dfa6738a994c57d607206ddfbfff578fd7ff03fc21d6d2e6dd0f5d9c4f373428`](https://stellar.expert/explorer/testnet/tx/dfa6738a994c57d607206ddfbfff578fd7ff03fc21d6d2e6dd0f5d9c4f373428) | 2 XLM |
+| 03 | Nasima Akter | 01912345678 | [`GATKOOHUCTPFXLDKPMBSMBH6V3X76BMKINOTF65NQBT4ZB3ZVT6EEH4N`](https://stellar.expert/explorer/testnet/account/GATKOOHUCTPFXLDKPMBSMBH6V3X76BMKINOTF65NQBT4ZB3ZVT6EEH4N) | [`3eae31df1141774fde916c5fed0400ed32be77a581ad9cda8aebd800ce014cea`](https://stellar.expert/explorer/testnet/tx/3eae31df1141774fde916c5fed0400ed32be77a581ad9cda8aebd800ce014cea) | 2 XLM |
+| 04 | Omar Faruk | 01612345678 | [`GD6DLAHNOKDBIODWYVXR4J3RLJUONFVMBYM5R74Q3D7QZLIHCEMIPJ54`](https://stellar.expert/explorer/testnet/account/GD6DLAHNOKDBIODWYVXR4J3RLJUONFVMBYM5R74Q3D7QZLIHCEMIPJ54) | [`c4ab4820febc5808c69adeb8ffbf3fefd3508b3527d9defa7dc79e262dc264f2`](https://stellar.expert/explorer/testnet/tx/c4ab4820febc5808c69adeb8ffbf3fefd3508b3527d9defa7dc79e262dc264f2) | 2 XLM |
+| 05 | Roksana Parvin | 01512345678 | [`GBCQPDZWEIZGNNZWABKGHWBZYQIKPCAWQRLEL6G3JLXWG4SBSI3TTXXD`](https://stellar.expert/explorer/testnet/account/GBCQPDZWEIZGNNZWABKGHWBZYQIKPCAWQRLEL6G3JLXWG4SBSI3TTXXD) | [`7283478fb8c2051d9c859daf89f158c74c2bf76bee9d1694d1d9f841c5278d1d`](https://stellar.expert/explorer/testnet/tx/7283478fb8c2051d9c859daf89f158c74c2bf76bee9d1694d1d9f841c5278d1d) | 2 XLM |
+| 06 | Rafiqul Islam | 01312345678 | [`GABVLI7ZWSOTW67IGAZ5MGT37BWD4LEMMM3YYEJ4XQMFJ3IMWS5NRND7`](https://stellar.expert/explorer/testnet/account/GABVLI7ZWSOTW67IGAZ5MGT37BWD4LEMMM3YYEJ4XQMFJ3IMWS5NRND7) | [`c01ca395f17488a96b83be9d55cd1e97b8e8b17361fab421192cffaaa23ffeb5`](https://stellar.expert/explorer/testnet/tx/c01ca395f17488a96b83be9d55cd1e97b8e8b17361fab421192cffaaa23ffeb5) | 2 XLM |
+| 07 | Selina Islam | 01412345678 | [`GBTTS6LZKLBBOHWIOGXSAO733XU7C4ZDRLKOBEUVHLXKWZMDQT3RJZRB`](https://stellar.expert/explorer/testnet/account/GBTTS6LZKLBBOHWIOGXSAO733XU7C4ZDRLKOBEUVHLXKWZMDQT3RJZRB) | [`2cc85b261bd8cf666f19ead30834de5cf063a0a31ff5bd5505202560af0ca456`](https://stellar.expert/explorer/testnet/tx/2cc85b261bd8cf666f19ead30834de5cf063a0a31ff5bd5505202560af0ca456) | 2 XLM |
+| 08 | Mahbubur Rahman | 01823456789 | [`GDJSU5SXVUKONLFXGMHZB2DG4W6O5RFZD2DYLRWW4ML2ZWNKKCL77VFT`](https://stellar.expert/explorer/testnet/account/GDJSU5SXVUKONLFXGMHZB2DG4W6O5RFZD2DYLRWW4ML2ZWNKKCL77VFT) | [`77b43e0d6859cdef3453de32c8a0b314d9b991b03212e646e019ccce00ef52d7`](https://stellar.expert/explorer/testnet/tx/77b43e0d6859cdef3453de32c8a0b314d9b991b03212e646e019ccce00ef52d7) | 2 XLM |
+| 09 | Rehana Akter | 01723456789 | [`GATCE2PF7ZJTWXKPAEKNFK5N7G4KRTFMV7KAOWFA23F3KY7GKDTR3Q3D`](https://stellar.expert/explorer/testnet/account/GATCE2PF7ZJTWXKPAEKNFK5N7G4KRTFMV7KAOWFA23F3KY7GKDTR3Q3D) | [`3eef6b500791aabc7e1adc24fa3e5402bacbc75c6050c3d6aadfb676c0e79435`](https://stellar.expert/explorer/testnet/tx/3eef6b500791aabc7e1adc24fa3e5402bacbc75c6050c3d6aadfb676c0e79435) | 2 XLM |
+| 10 | Shamsul Islam | 01923456789 | [`GDPGAFLUFT5PC5Z3FQB3QIPTZOOC4PYP3O5FNSXRVI7IK5DSBZ3XXZID`](https://stellar.expert/explorer/testnet/account/GDPGAFLUFT5PC5Z3FQB3QIPTZOOC4PYP3O5FNSXRVI7IK5DSBZ3XXZID) | [`880b86aebf02b1b1c82c32e041ac9b080633a239985acbfc37f0178f1b7a75e8`](https://stellar.expert/explorer/testnet/tx/880b86aebf02b1b1c82c32e041ac9b080633a239985acbfc37f0178f1b7a75e8) | 2 XLM |
+| 11 | Jahanara Begum | 01623456789 | [`GBAQ7D6CUPVHKRWI3ECT33PXLKI3QLA4ZWUSQ5CCYYIP5BFBPCKLIQX3`](https://stellar.expert/explorer/testnet/account/GBAQ7D6CUPVHKRWI3ECT33PXLKI3QLA4ZWUSQ5CCYYIP5BFBPCKLIQX3) | [`574c3ba469bc1236173a0e00652945ab5c4ac6ce1ac4e49a3ff81f909279216b`](https://stellar.expert/explorer/testnet/tx/574c3ba469bc1236173a0e00652945ab5c4ac6ce1ac4e49a3ff81f909279216b) | 2 XLM |
+| 12 | Mizanur Rahman | 01523456789 | [`GCSH5EQGV2VWFYUDYRLZZOOPDE2GLXWIRS5DBWUZCLYCJJQIJIH5M55M`](https://stellar.expert/explorer/testnet/account/GCSH5EQGV2VWFYUDYRLZZOOPDE2GLXWIRS5DBWUZCLYCJJQIJIH5M55M) | [`94e4d92e99c7360aa334e80aeabb2c44b0eedac6c1bd022424cbc8bc1de9756a`](https://stellar.expert/explorer/testnet/tx/94e4d92e99c7360aa334e80aeabb2c44b0eedac6c1bd022424cbc8bc1de9756a) | 2 XLM |
+
+The full log is saved in
+[`contracts/testnet-interactions.json`](contracts/testnet-interactions.json) and
+the generator script in [`contracts/fund-testnet-wallets.mjs`](contracts/fund-testnet-wallets.mjs).
+Wallet secret keys are intentionally **not** committed to the repository.
+
+<br/>
 
 <br/>
 

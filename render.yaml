@@ -18,5 +18,27 @@ services:
         sync: false
       - key: MISTRAL_API_KEY
         sync: false
+      - key: UPSTASH_REDIS_URL
+        value: "rediss://default:gQAAAAAAAp37AAIgcDIzNjliM2JlYmQ1NzA0N2Y5YWRmMjFiYTQ3MTRmNWE5Mg@fine-glider-171515.upstash.io:6379"
+      - key: FAUCET_CIRCUIT_BREAKER_THRESHOLD
+        value: "5"
+      - key: FAUCET_CIRCUIT_BREAKER_COOLDOWN
+        value: "30000"
+      - key: FAUCET_RATE_LIMIT_WINDOW
+        value: "60000"
+      - key: FAUCET_RATE_LIMIT_MAX
+        value: "3"
+      - key: FAUCET_DEDUP_TTL
+        value: "300"
+      - key: FAUCET_LOCK_TTL
+        value: "45000"
+      - key: FAUCET_CONCURRENCY
+        value: "10"
+      - key: FAUCET_RATE_LIMITER_MAX
+        value: "100"
+      - key: FAUCET_JOB_ATTEMPTS
+        value: "5"
+      - key: HEALTH_CHECK_PATH
+        value: /api/health
     healthCheckPath: /api/health
     autoDeploy: true

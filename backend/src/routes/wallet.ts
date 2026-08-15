@@ -1,109 +1,152 @@
-import { Router, Request, Response } from 'express'
-import * as StellarSdk from '@stellar/stellar-sdk'
+import { FastifyPluginAsync } from 'fastify'
+import {
+  getBalance,
+  fundWallet,
+  getContractInfo,
+  getContractEvents,
+  getTransaction,
+} from '../utils/wallet.js'
+import { FaucetProcessor } from '../queues/processors/faucet.processor.js'
+import { lockManager, cacheManager, metrics } from '../queues/index.js'
 
-const router = Router()
-const SOROBAN_RPC_URL = 'https://soroban-testnet.stellar.org'
-const HORIZON_URL = 'https://horizon-testnet.stellar.org'
+const routes: FastifyPluginAsync = async (fastify) => {
+  fastify.get<{ Params: { address: string } }>('/balance/:address', async (request, reply) => {
+    try {
+      const { address } = request.params
+      if (!address || address.length < 56) {
+        return reply.status(400).send({ error: 'Invalid Stellar address' })
+      }
 
-const sorobanServer = new StellarSdk.SorobanRpc.Server(SOROBAN_RPC_URL)
-const horizonServer = new StellarSdk.Horizon.Server(HORIZON_URL)
+      const cacheKey = `balance:${address}`
+      let balanceInfo = await cacheManager.get<any>(cacheKey)
 
-router.get('/balance/:address', async (req: Request, res: Response) => {
-  try {
-    const { address } = req.params
-    if (!address || address.length < 56) {
-      return res.status(400).json({ error: 'Invalid Stellar address' })
+      if (!balanceInfo) {
+        balanceInfo = await getBalance(address)
+        await cacheManager.set(cacheKey, balanceInfo, 120)
+      }
+
+      return balanceInfo
+    } catch (error: any) {
+      if (error.response?.status === 404) {
+        return {
+          address: request.params.address,
+          balance: '0',
+          sequence: '0',
+          subentryCount: 0,
+          isNew: true,
+        }
+      }
+      throw error
     }
+  })
 
-    const account = await horizonServer.loadAccount(address)
-    const xlmBalance = account.balances.find((b) => b.asset_type === 'native')
+  fastify.post<{ Body: { address: string; amount?: number; memo?: string; userId?: string; sessionId?: string } }>(
+    '/fund',
+    async (request, reply) => {
+      try {
+        const schema = fastify.withTypeProvider().typeProvider
+        const { address, amount = 10, memo, userId, sessionId } = request.body as {
+          address: string
+          amount?: number
+          memo?: string
+          userId?: string
+          sessionId?: string
+        }
 
-    res.json({
-      address,
-      balance: xlmBalance ? xlmBalance.balance : '0',
-      sequence: account.sequence,
-      subentryCount: account.subentry_count,
-    })
-  } catch (error) {
-    if ((error as any).response?.status === 404) {
-      return res.json({
-        address: req.params.address,
-        balance: '0',
-        sequence: '0',
-        subentryCount: 0,
-        isNew: true,
-      })
+        const lockKey = `fund:${address}`
+        const lock = await lockManager.acquire(lockKey, 30000)
+
+        if (!lock) {
+          await metrics.incrementCounter('rate.limited', { endpoint: '/fund', reason: 'lock_contention' })
+          return reply.status(429).send({
+            error: 'Rate limited',
+            message: 'This wallet is already being processed. Please wait.',
+            retryAfter: 30,
+          })
+        }
+
+        try {
+          const faucetProcessor = new FaucetProcessor()
+          const job = await faucetProcessor.addJob(
+            {
+              address,
+              amount,
+              memo,
+              userId,
+              sessionId,
+              priority: 'high',
+            },
+            { priority: 8 }
+          )
+
+          const result = await job.finished()
+
+          return reply.status(202).send({
+            success: true,
+            jobId: job.id,
+            address,
+            status: 'queued',
+            result,
+          })
+        } finally {
+          await lockManager.release(lock)
+        }
+      } catch (error) {
+        throw error
+      }
     }
-    throw error
-  }
-})
+  )
 
-router.post('/fund', async (req: Request, res: Response) => {
-  try {
-    const { address } = req.body
-    if (!address || address.length < 56) {
-      return res.status(400).json({ error: 'Invalid Stellar address' })
+  fastify.get<{ Params: { contractId: string } }>('/contract/:contractId', async (request) => {
+    const { contractId } = request.params
+    return getContractInfo(contractId)
+  })
+
+  fastify.get<{ Params: { contractId: string }; Querystring: { limit?: string } }>(
+    '/contract/:contractId/events',
+    async (request) => {
+      const { contractId } = request.params
+      const limit = parseInt(request.query.limit || '10')
+      return getContractEvents(contractId, limit)
     }
+  )
 
-    const friendbotUrl = `https://friendbot.stellar.org?addr=${encodeURIComponent(address)}`
-    const response = await fetch(friendbotUrl)
+  fastify.get<{ Params: { hash: string } }>('/tx/:hash', async (request, reply) => {
+    try {
+      const { hash } = request.params
+      return await getTransaction(hash)
+    } catch (error) {
+      return reply.status(404).send({ error: 'Transaction not found' })
+    }
+  })
 
-    if (!response.ok) throw new Error('Friendbot funding failed')
-    const result = await response.json()
+  fastify.get('/jobs/:jobId', async (request, reply) => {
+    try {
+      const { jobId } = request.params as { jobId: string }
+      const job = await faucetQueue.getJob(jobId)
 
-    res.json({ success: true, address, hash: result.hash, funded: true })
-  } catch (error) {
-    throw error
-  }
-})
+      if (!job) {
+        return reply.status(404).send({ error: 'Job not found' })
+      }
 
-router.get('/contract/:contractId', async (req: Request, res: Response) => {
-  try {
-    const { contractId } = req.params
-    res.json({
-      contractId,
-      network: 'testnet',
-      rpcUrl: SOROBAN_RPC_URL,
-      explorerUrl: `https://stellar.expert/testnet/contract/${contractId}`,
-    })
-  } catch (error) {
-    throw error
-  }
-})
+      const state = await job.getState()
 
-router.get('/contract/:contractId/events', async (req: Request, res: Response) => {
-  try {
-    const { contractId } = req.params
-    const limit = parseInt(req.query.limit as string) || 10
+      return {
+        id: job.id,
+        name: job.name,
+        data: job.data,
+        state,
+        progress: job.progress,
+        attemptsMade: job.attemptsMade,
+        timestamp: job.timestamp,
+        processedOn: job.processedOn,
+        finishedOn: job.finishedOn,
+        failedReason: job.failedReason,
+      }
+    } catch (error) {
+      throw error
+    }
+  })
+}
 
-    const response = await fetch(
-      `${SOROBAN_RPC_URL}/contracts/${contractId}/events?limit=${limit}`
-    )
-    const data = await response.json()
-
-    res.json({ events: data.events || [], contractId })
-  } catch (error) {
-    res.json({ events: [], contractId: req.params.contractId })
-  }
-})
-
-router.get('/tx/:hash', async (req: Request, res: Response) => {
-  try {
-    const { hash } = req.params
-    const response = await fetch(`${HORIZON_URL}/transactions/${hash}`)
-    const data = await response.json()
-
-    res.json({
-      hash: data.hash,
-      successful: data.successful,
-      ledger: data.ledger,
-      createdAt: data.created_at,
-      feeCharged: data.fee_charged,
-      memo: data.memo,
-    })
-  } catch (error) {
-    res.status(404).json({ error: 'Transaction not found' })
-  }
-})
-
-export { router as walletRoutes }
+export { routes as walletRoutes }
