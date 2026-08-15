@@ -1,0 +1,21 @@
+src/hooks/useWallet.ts
+  s_e378d0141ac016::t_4432a239e2e4e9 19,65-68,81-83,86-89,91,94,98-101,157-173,175-188,256,337-352
+src/stores/walletStore.ts
+  s_e378d0141ac016::t_51fe446a619d10 26-28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "6c569987454a7fb5df62136409a4d7ffedbc1228",
+  "prompts": {},
+  "sessions": {
+    "s_e378d0141ac016": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ffb4b1e38ffelv1S56NkkzBdSK",
+        "model": "unknown"
+      },
+      "human_author": "itsmypritam <pritamsdev2@gmail.com>"
+    }
+  }
+}
