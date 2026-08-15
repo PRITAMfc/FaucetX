@@ -7,7 +7,7 @@ export const createRedisConnection = (): Redis => {
 
   if (redisUrl) {
     return new Redis(redisUrl, {
-      maxRetriesPerRequest: 3,
+      maxRetriesPerRequest: null,
       retryStrategy: (times: number) => {
         const delay = Math.min(100 * Math.pow(2, times), 5000)
         return delay
@@ -26,7 +26,7 @@ export const createRedisConnection = (): Redis => {
       port: 6379,
       password: upstashToken,
       tls: {} as any,
-      maxRetriesPerRequest: 3,
+      maxRetriesPerRequest: null,
       retryStrategy: (times: number) => {
         const delay = Math.min(100 * Math.pow(2, times), 5000)
         return delay
