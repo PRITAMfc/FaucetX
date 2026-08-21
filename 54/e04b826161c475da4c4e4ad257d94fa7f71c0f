@@ -1,0 +1,35 @@
+contracts/testnet-interactions.json
+  s_2010fc9d93c282::t_5a97f78711c900 1-252
+README.md
+  s_2010fc9d93c282::t_e04cc6bb187a1a 235,237,239,241,243,258-263,265,267,269,277-321
+  s_2010fc9d93c282::t_dc574044051a69 240,264,266,322
+  s_2010fc9d93c282::t_de8fa349646fbb 665
+  s_e378d0141ac016::t_5fd1d56e45664b 521,622,659,661,663,666,668-669,674-723
+contracts/fund-testnet-wallets.mjs
+  s_2010fc9d93c282::t_2654f5c873794e 25-27,30-52
+  s_2010fc9d93c282::t_dea7cdddbadd0d 102,116,127,138-140
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "54e04b826161c475da4c4e4ad257d94fa7f71c0f",
+  "prompts": {},
+  "sessions": {
+    "s_2010fc9d93c282": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdbb05fecffe903lOjf40FBc2Q",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    },
+    "s_e378d0141ac016": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ffb4b1e38ffelv1S56NkkzBdSK",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    }
+  }
+}
