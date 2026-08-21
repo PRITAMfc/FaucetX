@@ -30,7 +30,7 @@ _Built for the Stellar White Belt Level 2 Challenge_
 [![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://netlify.com)
 [![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![Pitch Deck](https://img.shields.io/badge/Pitch_Deck-PPT.ai-FF6B00?style=for-the-badge&logo=googleslides&logoColor=white)](https://ppt.ai/slides/40641be2-ed6a-4308-97e0-15ccac508db1/share)
+[![Pitch Deck](https://img.shields.io/badge/Pitch_Deck-Gamma-7B2FF7?style=for-the-badge&logo=google-slides&logoColor=white)](https://gamma.app/docs/Fund-wallets-Prove-interactions-Ship-production-tlowdi4p54r3u3n)
 
 <br/>
 
@@ -42,7 +42,7 @@ _Built for the Stellar White Belt Level 2 Challenge_
 <a href="#-deployment">Deploy</a> •
 <a href="#-testing">Testing</a> •
 <a href="#-on-chain-verification">On-Chain Verification</a> •
-<a href="https://ppt.ai/slides/40641be2-ed6a-4308-97e0-15ccac508db1/share">Pitch Deck</a>
+<a href="https://gamma.app/docs/Fund-wallets-Prove-interactions-Ship-production-tlowdi4p54r3u3n">Pitch Deck</a>
 
 </div>
 
@@ -427,7 +427,7 @@ MISTRAL_API_KEY=your_mistral_api_key   # https://console.mistral.ai
 
 ```bash
 # Clone the repo
-git clone https://github.com/PRITAMfc/FaucetX.git
+git clone https://github.com/probirum/FaucetX.git
 cd FaucetX
 
 # Install all dependencies (monorepo)
@@ -636,7 +636,7 @@ monitoring/                         # Prometheus + Grafana (Docker)
 | **Frontend** | [mylulu67.netlify.app](https://mylulu67.netlify.app) | React SPA on Netlify |
 | **Backend** | [faucetx.onrender.com](https://faucetx.onrender.com) | Fastify API on Render |
 | **Smart Contract** | [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CBE3LXOSOKBPOWGZ6HVJXAEYILPFXHCEFWMYQA7CJIR63JRCMIXEU7DC) | Soroban on Testnet |
-| **Pitch Deck** | [FaucetX Slides](https://ppt.ai/slides/40641be2-ed6a-4308-97e0-15ccac508db1/share) | Project pitch & walkthrough |
+| **Pitch Deck** | [FaucetX Slides](https://gamma.app/docs/Fund-wallets-Prove-interactions-Ship-production-tlowdi4p54r3u3n) | Project pitch & walkthrough |
 | **User Data Sheet** | [faucetX wallet users testnet](https://docs.google.com/spreadsheets/d/186z-6wxATH9JxgvaAywCvKi2HfJpvj3Ajb64JwGrWjY/edit?usp=sharing) | Live on-chain user interaction records (50 wallets) |
 
 <br/>
@@ -649,7 +649,7 @@ All key FaucetX resources in one place:
 |----------|------|-------------|
 | 📝 **Wallet Interaction Form** | [Submit your interaction](https://docs.google.com/forms/d/1LJ8Jm5hNQuolJdw_svYR-OdRwjpMJuo8nd7j78WXyqE/edit) | Register your wallet address, tx hash & name after using the faucet |
 | 📊 **Responses Spreadsheet** | [faucetX wallet users testnet](https://docs.google.com/spreadsheets/d/186z-6wxATH9JxgvaAywCvKi2HfJpvj3Ajb64JwGrWjY/edit?usp=sharing) | Live sheet of all 50 on-chain wallet interactions (wallet, tx hash, name, rating) |
-| 🎤 **Pitch Deck** | [FaucetX Slides](https://ppt.ai/slides/40641be2-ed6a-4308-97e0-15ccac508db1/share) | Full project pitch — problem, solution, architecture & demo walkthrough |
+| 🎤 **Pitch Deck** | [FaucetX Slides](https://gamma.app/docs/Fund-wallets-Prove-interactions-Ship-production-tlowdi4p54r3u3n) | Full project pitch — problem, solution, architecture & demo walkthrough |
 
 <br/>
 
@@ -722,7 +722,7 @@ In response to the review feedback ("CI pipeline does not validate the smart con
 
 <table>
 <tr><th>Requirement</th><th>Status</th></tr>
-<tr><td>Public GitHub repository</td><td><a href="https://github.com/PRITAMfc/FaucetX">PRITAMfc/FaucetX</a> ✅</td></tr>
+<tr><td>Public GitHub repository</td><td><a href="https://github.com/probirum/FaucetX">probirum/FaucetX</a> ✅</td></tr>
 <tr><td>README with setup instructions</td><td>✅</td></tr>
 <tr><td>Minimum 15+ meaningful commits</td><td>✅ 20+ commits on <code>master</code></td></tr>
 <tr><td>3 error types handled</td><td>✅ <code>WALLET_NOT_FOUND</code> · <code>WALLET_REJECTED</code> · <code>INSUFFICIENT_BALANCE</code></td></tr>
@@ -862,6 +862,6 @@ Wallet secret keys are intentionally **not** committed to the repository.
 
 <br/>
 
-MIT License © [PRITAMfc](https://github.com/PRITAMfc)
+MIT License © [probirum](https://github.com/probirum)
 
 </div>
