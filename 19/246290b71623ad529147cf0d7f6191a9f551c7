@@ -1,0 +1,20 @@
+README.md
+  s_3b25ecfbd283d4::t_c349c9e870747b 38
+  s_3b25ecfbd283d4::t_8947a77d01333b 235-267
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "19246290b71623ad529147cf0d7f6191a9f551c7",
+  "prompts": {},
+  "sessions": {
+    "s_3b25ecfbd283d4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdbe4e648ffeSHG42SiyXxClgO",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    }
+  }
+}
