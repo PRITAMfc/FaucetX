@@ -1,0 +1,19 @@
+contracts/faucet-contract/Cargo.lock
+  s_3b25ecfbd283d4::t_f8dbbcd95cd3cc 192,224,226-227,349,351,374,377,387,396-398,400,419,423,460,543,580,677,686,791,876,886,1074-1075,1084,1100-1101,1164,1166,1180,1229,1253,1282
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "81cb273b68aee890e913f3f4028f0281350491cc",
+  "prompts": {},
+  "sessions": {
+    "s_3b25ecfbd283d4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdbe4e648ffeSHG42SiyXxClgO",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    }
+  }
+}

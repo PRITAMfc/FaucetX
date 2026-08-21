@@ -1,0 +1,22 @@
+.gitignore
+  s_3b25ecfbd283d4::t_282ea3b6f0b662 15
+README.md
+  s_3b25ecfbd283d4::t_cdb80fa6503db7 450-453
+  s_3b25ecfbd283d4::t_8b7edd2c51942d 483-486
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "79eb3bdb2c95ba18c3df46f5fc21fd0fa3bf4915",
+  "prompts": {},
+  "sessions": {
+    "s_3b25ecfbd283d4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdbe4e648ffeSHG42SiyXxClgO",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+contracts/faucet-contract/src/lib.rs
+  s_3b25ecfbd283d4::t_3936722e507282 4,27-28,53,55-57,62-63,68
+contracts/faucet-contract/src/test.rs
+  s_3b25ecfbd283d4::t_1140112ba8843d 1-5,8-9,18-20,22-29,31-34,36-37,39-44,46-57,68-73,75-86,88-98,101-102,104,137-144,146-156,158-168,170-172,174-176,187
+  s_3b25ecfbd283d4::t_fb53972bdce281 181-186
+  s_3b25ecfbd283d4::t_65982dda55cd0c 99-100,105-112,114-123,129-136
+  s_3b25ecfbd283d4::t_effbdb608e8637 11,21,30,45,74,113,157
+  s_3b25ecfbd283d4::t_c40bcc2168196f 61-67
+  s_3b25ecfbd283d4::t_764499e3d6883d 6,10,12-17,35,38,58-60,87,103,145,169,173,177-180
+  s_3b25ecfbd283d4::t_3936722e507282 124-128
+  s_3b25ecfbd283d4::t_d562f47ff91d04 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "db0708cf4188b66c426485911d3e2473a8f9e9de",
+  "prompts": {},
+  "sessions": {
+    "s_3b25ecfbd283d4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdbe4e648ffeSHG42SiyXxClgO",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    }
+  }
+}
