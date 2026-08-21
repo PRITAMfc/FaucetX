@@ -447,7 +447,10 @@ FaucetX/
 
 ### CI/CD
 
-- **GitHub Actions** — Runs tests + build on every push
+- **GitHub Actions** — Runs tests + build on every push:
+  - `Frontend & Backend` job — Bun install, shared/frontend/backend test suites
+  - `Build Frontend` job — TypeScript check + Vite production build
+  - `Smart Contract` job — Rust toolchain (`wasm32-unknown-unknown`), Stellar CLI v27, `cargo fmt`, `cargo build`, `cargo test` (10 Soroban unit tests), `cargo clippy -D warnings`, and `stellar contract build` Wasm artifact verification
 - **Netlify** — Auto-deploys frontend on push to `master`
 - **Render** — Auto-deploys backend on push to `master`
 
@@ -477,6 +480,10 @@ bun test
 bun run test:shared     # 10 tests — Zod schema validation
 bun run test:frontend   # 15 tests — Error handling, address validation, formatting
 bun run test:backend    # 4 tests  — Transaction schema validation
+
+# Smart contract tests (Rust)
+cd contracts/faucet-contract
+cargo test              # 10 tests — initialize, set_message auth, counter, events
 ```
 
 **29 tests across 3 workspaces** — all passing in CI.

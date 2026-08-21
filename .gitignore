@@ -12,6 +12,7 @@ target/
 # Rust build artifacts
 contracts/*/target/
 contracts/*/node_modules/
+contracts/faucet-contract/test_snapshots/
 
 # Environment
 .env
