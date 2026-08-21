@@ -40,7 +40,8 @@ _Built for the Stellar White Belt Level 2 Challenge_
 <a href="#-project-structure">Structure</a> •
 <a href="#-deployment">Deploy</a> •
 <a href="#-testing">Testing</a> •
-<a href="#-on-chain-verification">On-Chain Verification</a>
+<a href="#-on-chain-verification">On-Chain Verification</a> •
+<a href="https://ppt.ai/slides/40641be2-ed6a-4308-97e0-15ccac508db1/share">Pitch Deck</a>
 
 </div>
 
@@ -226,9 +227,97 @@ Contract events are polled every 10 seconds and displayed in the UI.
 | **Circuit Breaker** | Friendbot API resilience with auto-recovery |
 | **Caching** | Upstash Redis with TTL, invalidation, and cache warming |
 | **Distributed Locks** | Redis-backed locks with auto-extend and TTL |
-| **Metrics** | Counters, timings, gauges, health metrics, and Prometheus-style keys |
+| **Metrics** | Counters, timings, gauges, health metrics, HTTP instrumentation + Prometheus export |
 | **Scheduled Jobs** | Cron-based cleanup, aggregation, and health checks |
 | **AI Agent** | Mastra agent with Mistral AI for feedback analysis |
+
+<br/>
+
+### 📡 Monitoring & Analytics API
+
+The backend exposes a full monitoring stack — HTTP request tracking, process health, queue depths, cache stats, and a **Prometheus scrape endpoint**:
+
+| Endpoint | Description |
+|----------|-------------|
+| [`GET /api/monitoring`](https://faucetx.onrender.com/api/monitoring) | Full monitoring snapshot: process uptime/memory/CPU, HTTP counters & latency percentiles, queue depths, error rate, cache stats, circuit-breaker state |
+| [`GET /api/monitoring/process`](https://faucetx.onrender.com/api/monitoring/process) | Runtime process stats (RSS, heap, CPU time, load average) |
+| [`GET /api/monitoring/http`](https://faucetx.onrender.com/api/monitoring/http) | Per-route HTTP request counters and avg/p50/p95/p99 latencies |
+| [`GET /api/monitoring/prometheus`](https://faucetx.onrender.com/api/monitoring/prometheus) | Metrics in **Prometheus exposition format** (`text/plain; version=0.0.4`) — point any Prometheus/Grafana scraper at it |
+| [`GET /api/analytics/metrics`](https://faucetx.onrender.com/api/analytics/metrics) | Raw Redis-backed metric registry (counters, timings, gauges) |
+| [`GET /api/analytics/dashboard`](https://faucetx.onrender.com/api/analytics/dashboard) | Aggregated ops dashboard: feedback stats, daily ops, error rate |
+| [`GET /api/health`](https://faucetx.onrender.com/api/health) | Liveness probe with per-service checks |
+
+HTTP instrumentation is applied via Fastify `onRequest`/`onResponse` hooks (`backend/src/utils/httpMetrics.ts`) — every request is counted by method/route/status and timed into Redis-backed percentile histograms automatically.
+
+<br/>
+
+### 🐳 Prometheus + Grafana (Docker)
+
+A batteries-included observability stack lives in [`monitoring/`](monitoring). Prometheus scrapes the backend's `/api/monitoring/prometheus` endpoint every **15 seconds**, and Grafana ships with a **pre-provisioned FaucetX dashboard** — zero manual setup: datasources, dashboard, and layout all auto-load on first boot.
+
+#### Stack overview
+
+```bash
+# 1. Start the backend (needs UPSTASH_REDIS_URL — see backend/.env)
+cd backend && bun run dev
+
+# 2. Start Prometheus + Grafana
+cd monitoring
+docker compose up -d      # add `-d` for detached mode
+docker compose down       # stop and remove containers
+```
+
+| Service | Container | URL | Credentials |
+|---------|-----------|-----|-------------|
+| Grafana 11 | `faucetx-grafana` | [http://localhost:3000](http://localhost:3000) | `admin` / `faucetx` — FaucetX dashboard auto-loads as home |
+| Prometheus v3 | `faucetx-prometheus` | [http://localhost:9090](http://localhost:9090) | none — try `up`, `faucetx_http_requests_total` in the query box |
+
+#### What's inside `monitoring/`
+
+```
+monitoring/
+├── docker-compose.yml                          # 2 services + persistent volumes (15-day TSDB retention)
+├── prometheus/prometheus.yml                   # Scrape config: local backend + production Render
+└── grafana/
+    ├── provisioning/datasources/prometheus.yml # Auto-provisioned "Prometheus" datasource
+    ├── provisioning/dashboards/dashboards.yml  # Dashboard auto-loading provider
+    └── dashboards/faucetx-monitoring.json      # Pre-built 6-panel FaucetX dashboard
+```
+
+#### Scrape targets
+
+Both targets are pre-configured in [`monitoring/prometheus/prometheus.yml`](monitoring/prometheus/prometheus.yml):
+
+| Job | Target | Notes |
+|-----|--------|-------|
+| `faucetx-local` | `host.docker.internal:3001` | Your dev backend (`bun run dev`) via Docker's host gateway |
+| `faucetx-production` | `faucetx.onrender.com` (https) | The live deployment — works with zero local setup |
+
+Check target health at [localhost:9090/targets](http://localhost:9090/targets) — each job reports `UP`/`DOWN` per scrape.
+
+#### Metrics collected (`faucetx_*`)
+
+| Metric | Type | Meaning |
+|--------|------|---------|
+| `faucetx_http_requests_total{method}` | counter | Total HTTP requests received |
+| `faucetx_http_responses_total{method,status}` | counter | Responses per status code class |
+| `faucetx_http_errors_total{method}` | counter | 5xx server errors |
+| `faucetx_http_latency_{avg,p95,p99}_ms{method,route}` | gauge | Response-time percentiles per route |
+| `faucetx_process_uptime_seconds` / `_memory_rss_mb` / `_memory_heap_used_mb` | gauge | Runtime process health |
+| `faucetx_job_success{queue}` / `faucetx_job_error{queue}` | counter | BullMQ job outcomes |
+| `faucetx_cache_hit` / `faucetx_cache_miss` | counter | Redis cache effectiveness |
+| `faucetx_maintenance_completed{type}` | counter | Scheduled maintenance runs |
+
+#### Pre-built Grafana dashboard panels
+
+1. **Backend Uptime** — stat panel with service health coloring
+2. **Process Memory (RSS)** — stat panel with 300/500 MB warning thresholds
+3. **HTTP Response Rate by Status** — req/s time series split by status code
+4. **Request Latency per Route** — avg & p95 milliseconds for every API route
+5. **Requests & Errors (per hour)** — hourly request volume vs 5xx errors
+6. **Cache Hit Ratio** — Redis cache hit percentage over time
+
+> **Troubleshooting:** if `faucetx-local` shows `DOWN`, make sure Docker Desktop is running and the backend is listening on port 3001 before `docker compose up`. Data persists across restarts via named volumes (`prometheus-data`, `grafana-data`).
 
 <br/>
 
@@ -493,6 +582,7 @@ FaucetX/
 │       │   ├── transaction.ts      # TX validation + network info
 │       │   ├── feedback.ts         # AI feedback + Redis storage
 │       │   ├── analytics.ts        # Event tracking + metrics
+│       │   ├── monitoring.ts       # Monitoring snapshot + Prometheus export
 │       │   └── queues.ts           # Queue management APIs
 │       ├── middleware/
 │       │   └── rateLimiter.ts      # Global rate limiting
@@ -509,6 +599,7 @@ FaucetX/
 │       └── utils/
 │           ├── wallet.ts           # Stellar Horizon + Friendbot helpers
 │           ├── mistral.ts          # Mistral AI integration
+│           ├── httpMetrics.ts      # Fastify HTTP instrumentation hooks
 │           └── transaction.ts      # Transaction validation
 │
 ├── contracts/                      # Soroban smart contract
@@ -522,6 +613,13 @@ FaucetX/
 │
 └── shared/                         # Shared Zod schemas & types
     └── src/index.ts
+
+monitoring/                         # Prometheus + Grafana (Docker)
+├── docker-compose.yml
+├── prometheus/prometheus.yml       # Scrape config (local + production)
+└── grafana/
+    ├── provisioning/               # Auto-provisioned datasource & dashboard
+    └── dashboards/                 # FaucetX monitoring dashboard JSON
 ```
 
 <br/>
@@ -537,6 +635,20 @@ FaucetX/
 | **Frontend** | [mylulu67.netlify.app](https://mylulu67.netlify.app) | React SPA on Netlify |
 | **Backend** | [faucetx.onrender.com](https://faucetx.onrender.com) | Fastify API on Render |
 | **Smart Contract** | [Stellar Expert](https://stellar.expert/explorer/testnet/contract/CBE3LXOSOKBPOWGZ6HVJXAEYILPFXHCEFWMYQA7CJIR63JRCMIXEU7DC) | Soroban on Testnet |
+| **Pitch Deck** | [FaucetX Slides](https://ppt.ai/slides/40641be2-ed6a-4308-97e0-15ccac508db1/share) | Project pitch & walkthrough |
+| **User Data Sheet** | [faucetX wallet users testnet](https://docs.google.com/spreadsheets/d/186z-6wxATH9JxgvaAywCvKi2HfJpvj3Ajb64JwGrWjY/edit?usp=sharing) | Live on-chain user interaction records (50 wallets) |
+
+<br/>
+
+### 🔗 Project Links
+
+All key FaucetX resources in one place:
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| 📝 **Wallet Interaction Form** | [Submit your interaction](https://docs.google.com/forms/d/1LJ8Jm5hNQuolJdw_svYR-OdRwjpMJuo8nd7j78WXyqE/edit) | Register your wallet address, tx hash & name after using the faucet |
+| 📊 **Responses Spreadsheet** | [faucetX wallet users testnet](https://docs.google.com/spreadsheets/d/186z-6wxATH9JxgvaAywCvKi2HfJpvj3Ajb64JwGrWjY/edit?usp=sharing) | Live sheet of all 50 on-chain wallet interactions (wallet, tx hash, name, rating) |
+| 🎤 **Pitch Deck** | [FaucetX Slides](https://ppt.ai/slides/40641be2-ed6a-4308-97e0-15ccac508db1/share) | Full project pitch — problem, solution, architecture & demo walkthrough |
 
 <br/>
 
@@ -727,6 +839,8 @@ Every transaction hash is verifiable on Stellar Expert / Horizon.
 The full log is saved in
 [`contracts/testnet-interactions.json`](contracts/testnet-interactions.json) and
 the generator script in [`contracts/fund-testnet-wallets.mjs`](contracts/fund-testnet-wallets.mjs).
+A live spreadsheet of all 50 user interactions (wallet, tx hash, name, rating) is available
+[here](https://docs.google.com/spreadsheets/d/186z-6wxATH9JxgvaAywCvKi2HfJpvj3Ajb64JwGrWjY/edit?usp=sharing).
 Wallet secret keys are intentionally **not** committed to the repository.
 
 <br/>
