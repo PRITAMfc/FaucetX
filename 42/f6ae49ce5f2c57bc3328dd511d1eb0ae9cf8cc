@@ -1,0 +1,21 @@
+README.md
+  s_2010fc9d93c282::t_e531f77bbbd7b2 45,639,652
+  s_2010fc9d93c282::t_7263f621aa48d5 33
+  s_2010fc9d93c282::t_76a581727af072 430,725,865
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "42f6ae49ce5f2c57bc3328dd511d1eb0ae9cf8cc",
+  "prompts": {},
+  "sessions": {
+    "s_2010fc9d93c282": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdbb05fecffe903lOjf40FBc2Q",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    }
+  }
+}
