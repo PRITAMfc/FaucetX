@@ -30,6 +30,7 @@ _Built for the Stellar White Belt Level 2 Challenge_
 [![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://netlify.com)
 [![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Pitch Deck](https://img.shields.io/badge/Pitch_Deck-PPT.ai-FF6B00?style=for-the-badge&logo=googleslides&logoColor=white)](https://ppt.ai/slides/40641be2-ed6a-4308-97e0-15ccac508db1/share)
 
 <br/>
 
