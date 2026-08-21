@@ -35,6 +35,7 @@ _Built for the Stellar White Belt Level 2 Challenge_
 
 <a href="#-features">Features</a> •
 <a href="#-quick-start">Quick Start</a> •
+<a href="#-ai-features">AI Features</a> •
 <a href="#-screenshots">Screenshots</a> •
 <a href="#-project-structure">Structure</a> •
 <a href="#-deployment">Deploy</a> •
@@ -228,6 +229,39 @@ Contract events are polled every 10 seconds and displayed in the UI.
 | **Metrics** | Counters, timings, gauges, health metrics, and Prometheus-style keys |
 | **Scheduled Jobs** | Cron-based cleanup, aggregation, and health checks |
 | **AI Agent** | Mastra agent with Mistral AI for feedback analysis |
+
+<br/>
+
+### 🤖 AI Features
+
+FaucetX ships a production AI stack powered by **Mistral AI** (`mistral-small-latest`) and the **Mastra** agent framework — no mock responses, real API integration.
+
+#### 1. FaucetX Agent (`backend/src/mastra/agent.ts`)
+
+An autonomous assistant agent with **10 callable tools** covering every faucet operation:
+
+| Tool | Capability |
+|------|------------|
+| `getBalance` | Query live XLM balances for any testnet address via Horizon |
+| `fundWallet` | Fund testnet wallets through friendbot |
+| `getContractInfo` | Fetch deployed Soroban contract metadata |
+| `getContractEvents` | Retrieve on-chain contract event history |
+| `getTransaction` | Look up transaction details by hash |
+| `validateTransaction` | Validate transaction payloads before submission |
+| `getNetworkInfo` | Report Stellar testnet network status |
+| `submitFeedback` | Store user feedback with AI classification |
+| `getFeedback` | Retrieve stored feedback entries |
+| `getFeedbackStats` | Aggregate feedback statistics |
+
+#### 2. AI Feedback Analysis (`backend/src/utils/mistral.ts`)
+
+Every piece of user feedback submitted through the app is analyzed in real time:
+
+- **Sentiment classification** → `positive` / `negative` / `neutral`
+- **Category routing** → `bug` / `feature_request` / `ux` / `general` / `praise`
+- **Auto-generated acknowledgment** → a friendly 1-2 sentence response thanking the user or addressing their concern
+- Uses structured JSON output (`response_format: json_object`) with low temperature (0.3) for deterministic, parseable results
+- Graceful fallback to a neutral default if the API is unreachable
 
 <br/>
 
