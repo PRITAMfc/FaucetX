@@ -12,6 +12,7 @@ _Built for the Stellar White Belt Level 2 Challenge_
 
 <br/>
 
+[![CI](https://github.com/probirum/FaucetX/actions/workflows/ci.yml/badge.svg)](https://github.com/probirum/FaucetX/actions/workflows/ci.yml)
 [![React](https://img.shields.io/badge/React_18-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
 [![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
@@ -490,6 +491,24 @@ cargo test              # 10 tests — initialize, set_message auth, counter, ev
 ```
 
 **29 tests across 3 workspaces** — all passing in CI.
+
+<br/>
+
+---
+
+## Latest Updates — Review Revisions Implemented
+
+In response to the review feedback ("CI pipeline does not validate the smart contract"), the following updates were shipped:
+
+| Commit | Update |
+|--------|--------|
+| [`81cb273`](https://github.com/probirum/FaucetX/commit/81cb273) | **fix(contract)** — pinned `ed25519-dalek` to 2.x in `Cargo.lock` so `cargo test` compiles with `soroban-env-host` 21.x |
+| [`db0708c`](https://github.com/probirum/FaucetX/commit/db0708c) | **test(contract)** — added 10 Soroban unit tests covering `initialize`, re-initialization guard, owner-only auth (incl. mock signature), counter increments, and event payload decoding |
+| [`ac0c7c9`](https://github.com/probirum/FaucetX/commit/ac0c7c9) | **feat(ci)** — new **Smart Contract** CI job: Rust toolchain with `wasm32-unknown-unknown` target, Stellar CLI v27, then `cargo fmt`, `cargo build`, `cargo test`, `cargo clippy -D warnings`, and `stellar contract build` inside `contracts/faucet-contract` |
+| [`1ea4299`](https://github.com/probirum/FaucetX/commit/1ea4299) | **fix(frontend)** — contract calls now exactly match `lib.rs` API: `set_message(owner, message)` args encoded as `Symbol` (was `bytes`), simulation result read via `.retval` + `scValToNative`, transactions simulated & assembled via `SorobanRpc.assembleTransaction` before wallet signing |
+| [`79eb3bd`](https://github.com/probirum/FaucetX/commit/79eb3bd) | **chore** — backend lockfile tracked, `test_snapshots/` ignored, README updated |
+
+✅ **All 3 CI jobs passing**: [Frontend & Backend · Smart Contract · Build Frontend](https://github.com/probirum/FaucetX/actions/runs/32480468321)
 
 <br/>
 
