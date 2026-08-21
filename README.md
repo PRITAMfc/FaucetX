@@ -300,6 +300,9 @@ VITE_FAUCET_CONTRACT_ID=YOUR_CONTRACT_ID_HERE
 <div align="center"><i>StellarWalletsKit modal showing all available wallet options</i></div>
 
 <br/>
+##Ci passed 
+<img width="1516" height="626" alt="ci pass " src="https://github.com/user-attachments/assets/ce6d475b-6a3a-429c-b1b6-4168e0f931f0" />
+
 
 ### Connected Wallet State
 
