@@ -1,0 +1,24 @@
+src/hooks/useContract.ts
+  s_3b25ecfbd283d4::t_3770cfe0391a60 36-37
+  s_3b25ecfbd283d4::t_fe9867c3e85e35 71-79,82
+src/components/ContractPanel.tsx
+  s_3b25ecfbd283d4::t_0506c23c76776a 64-67,71
+  s_3b25ecfbd283d4::t_21ec650ac4b99f 28,30-31,33-35
+  s_3b25ecfbd283d4::t_40881c4737ea20 27,29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "569dc78619c0b60333d69430e8525b5419b12b10",
+  "prompts": {},
+  "sessions": {
+    "s_3b25ecfbd283d4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdbe4e648ffeSHG42SiyXxClgO",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    }
+  }
+}
