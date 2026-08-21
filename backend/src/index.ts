@@ -6,6 +6,8 @@ import { transactionRoutes } from './routes/transaction.js'
 import { feedbackRoutes } from './routes/feedback.js'
 import { analyticsRoutes } from './routes/analytics.js'
 import { queueRoutes } from './routes/queues.js'
+import { monitoringRoutes } from './routes/monitoring.js'
+import { registerHttpMonitoring } from './utils/httpMetrics.js'
 import { faucetAgent } from './mastra/agent.js'
 import {
   faucetQueue,
@@ -89,6 +91,7 @@ app.register(transactionRoutes, { prefix: '/api/transaction' })
 app.register(feedbackRoutes, { prefix: '/api/feedback' })
 app.register(analyticsRoutes, { prefix: '/api/analytics' })
 app.register(queueRoutes, { prefix: '/api/queues' })
+app.register(monitoringRoutes, { prefix: '/api/monitoring' })
 
 app.setErrorHandler((err: any, req, reply) => {
   console.error('Error:', err.message)
@@ -96,7 +99,7 @@ app.setErrorHandler((err: any, req, reply) => {
   metrics.incrementCounter('http.error', {
     method: req.method,
     path: req.url,
-    status: reply.statusCode,
+    status: String(reply.statusCode),
   })
 
   reply.status(500).send({
@@ -132,6 +135,8 @@ const startServer = async () => {
     })
 
     await app.register(rateLimiterPlugin)
+
+    await registerHttpMonitoring(app)
 
     const processors = {
       faucet: new FaucetProcessor(),
