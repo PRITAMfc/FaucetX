@@ -579,8 +579,9 @@ Wallet secret keys are intentionally **not** committed to the repository.
 
 **Built with Stellar** • **Powered by Soroban** • **Deployed on Netlify + Render**
 
-<br/>
 
+<br/>
+<img width="1903" height="676" alt="ci" src="https://github.com/user-attachments/assets/789da288-0f56-495e-8613-b09cc8a86d17" />
 [![Stellar](https://img.shields.io/badge/-Stellar-08B5E5?style=for-the-badge&logo=stellar&logoColor=white)](https://stellar.org)
 [![Soroban](https://img.shields.io/badge/-Soroban-08B5E5?style=for-the-badge)](https://soroban.stellar.org)
 [![Netlify](https://img.shields.io/badge/-Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://netlify.com)
