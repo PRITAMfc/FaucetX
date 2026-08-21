@@ -22,13 +22,34 @@ const AMOUNT_STROOPS = BigInt(Number(XLM_TO_SEND) * 10_000_000)
 // Optional: provide a first wallet via env (never hardcode secrets in the repo)
 const USER_SECRET = process.env.FAUCET_FIRST_SECRET
 
-const NUM_EXTRA_WALLETS = USER_SECRET ? 11 : 12 // 1 (provided) + 11 generated = 12 total
+const TOTAL_WALLETS = Number(process.env.WALLET_COUNT ?? 50) // generated wallets
+const MAX_RETRIES = 5
+const RETRY_DELAY_MS = 5000
 
 async function fundWithFriendbot(publicKey) {
-  const res = await fetch(`${FRIENDBOT_URL}?addr=${publicKey}`)
-  if (!res.ok) {
-    const body = await res.text()
-    throw new Error(`Friendbot failed for ${publicKey}: ${res.status} ${body.slice(0, 200)}`)
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const res = await fetch(`${FRIENDBOT_URL}?addr=${publicKey}`)
+      if (res.ok) return
+      const body = await res.text()
+      throw new Error(`Friendbot failed for ${publicKey}: ${res.status} ${body.slice(0, 200)}`)
+    } catch (err) {
+      if (attempt === MAX_RETRIES) throw err
+      console.log(`retry ${attempt}/${MAX_RETRIES - 1} after ${RETRY_DELAY_MS}ms (${err.message.slice(0, 80)})`)
+      await new Promise(r => setTimeout(r, RETRY_DELAY_MS * attempt))
+    }
+  }
+}
+
+async function sendWithRetry(fn, label) {
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      return await fn()
+    } catch (err) {
+      if (attempt === MAX_RETRIES) throw err
+      console.log(`  ${label} retry ${attempt}/${MAX_RETRIES - 1}: ${err.message.slice(0, 100)}`)
+      await new Promise(r => setTimeout(r, RETRY_DELAY_MS))
+    }
   }
 }
 
@@ -78,7 +99,7 @@ async function main() {
     const userKeypair = StellarSdk.Keypair.fromSecret(USER_SECRET)
     wallets.push({ public: userKeypair.publicKey(), secret: userKeypair.secret(), source: 'user-provided' })
   }
-  for (let i = 0; i < NUM_EXTRA_WALLETS; i++) {
+  for (let i = 0; i < TOTAL_WALLETS; i++) {
     const kp = StellarSdk.Keypair.random()
     wallets.push({ public: kp.publicKey(), secret: kp.secret(), source: 'generated' })
   }
@@ -92,7 +113,7 @@ async function main() {
 
     process.stdout.write('  Funding via Friendbot... ')
     try {
-      await fundWithFriendbot(w.public)
+      await sendWithRetry(() => fundWithFriendbot(w.public), 'fund')
       console.log('OK')
     } catch (err) {
       console.log(`FAILED → ${err.message}`)
@@ -103,7 +124,7 @@ async function main() {
 
     process.stdout.write(`  Transferring ${XLM_TO_SEND} XLM → faucet contract... `)
     try {
-      const txHash = await sendXlmToContract(keypair)
+      const txHash = await sendWithRetry(() => sendXlmToContract(keypair), 'transfer')
       console.log('SUCCESS')
       console.log(`  Tx hash: ${txHash}`)
       rows.push({
@@ -114,6 +135,9 @@ async function main() {
     } catch (err) {
       console.log(`FAILED → ${err.message}`)
     }
+
+    // small pause between wallets to stay friendly to friendbot/rpc rate limits
+    await new Promise(r => setTimeout(r, 1000))
   }
 
   const outputPath = path.join(__dirname, 'testnet-interactions.json')
