@@ -1,0 +1,38 @@
+README.md
+  s_2010fc9d93c282::t_8efea56e018fd3 643-651
+  s_2010fc9d93c282::t_2f0b94a8807871 230
+  s_2010fc9d93c282::t_d1f8fe567596fb 585,602
+  s_2010fc9d93c282::t_fb8f6168725a32 638
+  s_2010fc9d93c282::t_e191f01c789126 616-622
+  s_2010fc9d93c282::t_400e5a79387d5b 842-843
+  s_2010fc9d93c282::t_cdcbb05972ab3e 236-253
+  s_2010fc9d93c282::t_43b22082f001ff 43-44
+  s_2010fc9d93c282::t_8cfe9ad29bce81 256,258-259,261,266-284,286-311,313-318,320
+  s_2010fc9d93c282::t_5fbff4d653bbd9 254-255,257,260,262-265,285,312,319,321-323,641
+  s_2010fc9d93c282::t_42a5b3982834ec 639
+  s_e378d0141ac016::t_9e5ca0fee3d17d 640,642
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "4d6ee17b41c02cc9b447f61d86dd16fcf1877084",
+  "prompts": {},
+  "sessions": {
+    "s_2010fc9d93c282": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdbb05fecffe903lOjf40FBc2Q",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    },
+    "s_e378d0141ac016": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ffb4b1e38ffelv1S56NkkzBdSK",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    }
+  }
+}
