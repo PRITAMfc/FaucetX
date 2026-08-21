@@ -33,8 +33,8 @@ export function useContract() {
 
       const response = await sorobanServer.simulateTransaction(transaction)
 
-      if ('result' in response) {
-        return response.result
+      if ('result' in response && response.result) {
+        return response.result.retval
       }
 
       throw new Error('Simulation failed')
@@ -68,9 +68,18 @@ export function useContract() {
         .setTimeout(180)
         .build()
 
+      const simulation = await sorobanServer.simulateTransaction(transaction)
+      if (StellarSdk.SorobanRpc.Api.isSimulationError(simulation)) {
+        setTxStatus(TxStatus.FAILED)
+        setTxError(`Simulation failed: ${simulation.error}`)
+        throw new Error(simulation.error)
+      }
+
+      const assembled = StellarSdk.SorobanRpc.assembleTransaction(transaction, simulation).build()
+
       setTxStatus(TxStatus.SUBMITTED)
 
-      const { signedTxXdr } = await StellarWalletsKit.signTransaction(transaction.toXDR(), {
+      const { signedTxXdr } = await StellarWalletsKit.signTransaction(assembled.toXDR(), {
         networkPassphrase: TESTNET_NETWORK_PASSPHRASE,
         address,
       })

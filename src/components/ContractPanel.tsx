@@ -24,15 +24,15 @@ export function ContractPanel() {
   const fetchState = useCallback(async () => {
     if (!hasContract || !address) return
     try {
-      const result = await readContract('get_message')
-      if (result && 'val' in result) {
-        const val = StellarSdk.xdr.ScVal.fromXDR(result.val as string, 'base64')
-        if (val.switch().name === 'scvBytes') {
-          setContractValue(Buffer.from(val.bytes()).toString('utf-8'))
-        } else {
-          setContractValue(JSON.stringify(val.toXDR().toString('base64')))
-        }
+      const scVal = await readContract('get_message')
+
+      if (!scVal || !(scVal instanceof StellarSdk.xdr.ScVal)) {
+        setContractValue('(unreadable)')
+        return
       }
+
+      const native = StellarSdk.scValToNative(scVal)
+      setContractValue(typeof native === 'string' ? native : '(unreadable)')
     } catch {
       setContractValue('(unreadable)')
     }
@@ -61,10 +61,14 @@ export function ContractPanel() {
 
   const handleSetValue = async () => {
     if (!inputValue || !address) return
+    if (inputValue.length > 32) {
+      toast.error('Message must be 32 characters or fewer (on-chain Symbol limit)')
+      return
+    }
     setIsWriting(true)
     try {
       const ownerScVal = new StellarSdk.Address(address).toScVal()
-      const msgScVal = StellarSdk.nativeToScVal(inputValue, { type: 'bytes' })
+      const msgScVal = StellarSdk.nativeToScVal(inputValue, { type: 'symbol' })
 
       await writeContract('set_message', [ownerScVal, msgScVal])
 
