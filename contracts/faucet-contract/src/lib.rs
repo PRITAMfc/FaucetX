@@ -1,18 +1,13 @@
 #![no_std]
 use soroban_sdk::{contract, contractimpl, contracttype, symbol_short, Address, Env, Symbol};
 
-
-const OWNER: Symbol = symbol_short!("OWNER");
-const MESSAGE: Symbol = symbol_short!("MESSAGE");
-const COUNTER: Symbol = symbol_short!("COUNTER");
-
+mod test;
 
 #[contracttype]
 pub enum DataKey {
     Owner,
     Message,
     Counter,
-    
 }
 
 #[contract]
@@ -29,10 +24,8 @@ impl FaucetContract {
         env.storage().instance().set(&DataKey::Message, &message);
         env.storage().instance().set(&DataKey::Counter, &0u32);
 
-        env.events().publish(
-            (symbol_short!("INIT"),),
-            (owner, message),
-        );
+        env.events()
+            .publish((symbol_short!("INIT"),), (owner, message));
     }
 
     /// Get the current stored message
@@ -57,29 +50,22 @@ impl FaucetContract {
             panic!("Only the owner can set the message");
         }
 
-        env.storage().instance().set(&DataKey::Message, &new_message);
-
-        let counter: u32 = env
-            .storage()
+        env.storage()
             .instance()
-            .get(&DataKey::Counter)
-            .unwrap_or(0);
+            .set(&DataKey::Message, &new_message);
+
+        let counter: u32 = env.storage().instance().get(&DataKey::Counter).unwrap_or(0);
         env.storage()
             .instance()
             .set(&DataKey::Counter, &(counter + 1));
 
-        env.events().publish(
-            (symbol_short!("UPDATE"),),
-            (new_message, counter + 1),
-        );
+        env.events()
+            .publish((symbol_short!("UPDATE"),), (new_message, counter + 1));
     }
 
     /// Get the update counter
     pub fn get_counter(env: Env) -> u32 {
-        env.storage()
-            .instance()
-            .get(&DataKey::Counter)
-            .unwrap_or(0)
+        env.storage().instance().get(&DataKey::Counter).unwrap_or(0)
     }
 
     /// Get the contract owner
