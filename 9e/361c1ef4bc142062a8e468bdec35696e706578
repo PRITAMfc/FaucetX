@@ -1,0 +1,19 @@
+README.md
+  s_2010fc9d93c282::t_25fb4ce717fb26 33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.23",
+  "base_commit_sha": "9e361c1ef4bc142062a8e468bdec35696e706578",
+  "prompts": {},
+  "sessions": {
+    "s_2010fc9d93c282": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdbb05fecffe903lOjf40FBc2Q",
+        "model": "unknown"
+      },
+      "human_author": "probirum <proumg2@gmail.com>"
+    }
+  }
+}
